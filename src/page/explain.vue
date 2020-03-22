@@ -1,13 +1,14 @@
 <template>
     <div class="fillcontain">
         <head-top></head-top>
-        <p class="explain_text">node-elm后台管理系统</p>
-        <p class="explain_text">第一次登录的用户自动注册成为普通管理员</p>
-        <p class="explain_text">普通管理员可以添加，修改信息</p>
-        <p class="explain_text">超级管理员可以删除信息</p>
+        <p class="explain_text">Clouvm虚拟机数据保护系统 v2.1</p>
+        <p class="explain_text">跨云数据流动：私有云->公有云，公有云->公有云，公有云->私有云</p>
+        <p class="explain_text">增量数据备份：有效减少备份数据容量</p>
+        <p class="explain_text">持续数据保护：RPO=0</p>
+        <p class="explain_text">秒级数据恢复：被恢复虚拟机及时可用</p>
     </div>
 </template>
-
+v2.1
 <script>
 	import headTop from '../components/headTop'
     export default {

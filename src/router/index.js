@@ -37,31 +37,35 @@ const routes = [
 		},{
 			path: '/addShop',
 			component: addShop,
-			meta: ['添加数据', '添加商铺'],
+			meta: ['添加项目', '添加备份策略'],
 		},{
 			path: '/addGoods',
 			component: addGoods,
-			meta: ['添加数据', '添加商品'],
+			meta: ['添加项目', '添加被保护虚拟机'],
+/*
 		},{
 			path: '/userList',
 			component: userList,
-			meta: ['数据管理', '用户列表'],
+			meta: ['项目管理', '用户列表'],
+*/
 		},{
 			path: '/shopList',
 			component: shopList,
-			meta: ['数据管理', '商家列表'],
+			meta: ['项目管理', '备份策略列表'],
 		},{
 			path: '/foodList',
 			component: foodList,
-			meta: ['数据管理', '食品列表'],
+			meta: ['项目管理', '被保护虚拟机列表'],
 		},{
 			path: '/orderList',
 			component: orderList,
-			meta: ['数据管理', '订单列表'],
+			meta: ['项目管理', '即时恢复虚拟机列表'],
+/*
 		},{
 			path: '/adminList',
 			component: adminList,
-			meta: ['数据管理', '管理员列表'],
+			meta: ['项目管理', '管理员列表'],
+*/
 		},{
 			path: '/visitor',
 			component: visitor,
@@ -70,6 +74,7 @@ const routes = [
 			path: '/newMember',
 			component: newMember,
 			meta: ['图表', '用户数据'],
+/*
 		},{
 			path: '/uploadImg',
 			component: uploadImg,
@@ -79,6 +84,7 @@ const routes = [
 			component: vueEdit,
 			meta: ['编辑', '文本编辑'],
 		},{
+*/
 			path: '/adminSet',
 			component: adminSet,
 			meta: ['设置', '管理员设置'],
@@ -89,7 +95,7 @@ const routes = [
 		},{
 			path: '/explain',
 			component: explain,
-			meta: ['说明', '说明'],
+			meta: ['关于', '关于'],
 		}]
 	}
 ]
