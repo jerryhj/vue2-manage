@@ -46,30 +46,30 @@ const routes = [
 		},{
 			path: '/userList',
 			component: userList,
-			meta: ['项目管理', '用户列表'],
+			meta: ['列表管理', '用户列表'],
 */
 		},{
 			path: '/shopList',
 			component: shopList,
-			meta: ['项目管理', '备份策略列表'],
+			meta: ['列表管理', '备份策略列表'],
 		},{
 			path: '/foodList',
 			component: foodList,
-			meta: ['项目管理', '被保护虚拟机列表'],
+			meta: ['列表管理', '被保护虚拟机列表'],
 		},{
 			path: '/orderList',
 			component: orderList,
-			meta: ['项目管理', '即时恢复虚拟机列表'],
+			meta: ['列表管理', '即时恢复虚拟机列表'],
 /*
 		},{
 			path: '/adminList',
 			component: adminList,
-			meta: ['项目管理', '管理员列表'],
+			meta: ['列表管理', '管理员列表'],
 */
 		},{
 			path: '/visitor',
 			component: visitor,
-			meta: ['图表', '用户分布'],
+			meta: ['图表', '被保护虚拟机'],
 		},{
 			path: '/newMember',
 			component: newMember,

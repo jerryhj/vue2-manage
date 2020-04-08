@@ -4,155 +4,141 @@
         <el-row style="margin-top: 20px;">
   			<el-col :span="12" :offset="4">
 		        <el-form :model="formData" :rules="rules" ref="formData" label-width="110px" class="demo-formData">
-					<el-form-item label="店铺名称" prop="name">
+					<el-form-item label="策略名称" prop="name">
 						<el-input v-model="formData.name"></el-input>
 					</el-form-item>
-					<el-form-item label="详细地址" prop="address">
-						<el-autocomplete
-						  v-model="formData.address"
-						  :fetch-suggestions="querySearchAsync"
-						  placeholder="请输入地址"
-						  style="width: 100%;"
-						  @select="addressSelect"
-						></el-autocomplete>
-						<span>当前城市：{{city.name}}</span>
+					<el-form-item label="策略密码">
+						<el-radio class="radio" v-model="encrypt" label="noencrypt">不加密</el-radio>
+  						<el-radio class="radio" v-model="encrypt" label="default_encrypt">使用缺省密码</el-radio>
+  						<el-radio class="radio" v-model="encrypt" label="use_encrpt">设定密码</el-radio>
 					</el-form-item>
-					<el-form-item label="联系电话" prop="phone">
-						<el-input v-model.number="formData.phone" maxLength="11"></el-input>
+					<el-row v-if="encrypt == 'use_encrpt'">
+						<el-form-item label="设置密码" prop="promotion_info">
+							<el-input v-model="formData.promotion_info"></el-input>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置年备份" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="formData.is_year"></el-switch>
 					</el-form-item>
-					<el-form-item label="店铺简介" prop="description">
-						<el-input v-model="formData.description"></el-input>
+					<el-row v-if="formData.is_year == true">
+						<el-form-item label="备份时间" prop="year_time">
+							<el-input-number v-model="formData.year_time" :min="1" :max="365"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份间隔" prop="year_gap">
+							<el-input-number v-model="formData.year_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" prop="year_num">
+							<el-input-number v-model="formData.year_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.year_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.year_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="formData.year_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置月备份" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="formData.is_month"></el-switch>
 					</el-form-item>
-					<el-form-item label="店铺标语" prop="promotion_info">
-						<el-input v-model="formData.promotion_info"></el-input>
+					<el-row v-if="formData.is_month == true">
+						<el-form-item label="备份时间" prop="month_time">
+							<el-input-number v-model="formData.month_time" :min="1" :max="31"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份间隔" prop="month_gap">
+							<el-input-number v-model="formData.month_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" prop="month_num">
+							<el-input-number v-model="formData.month_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.month_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.month_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="formData.month_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置周备份" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="formData.is_week"></el-switch>
 					</el-form-item>
-					<el-form-item label="店铺分类">
-						<el-cascader
-						  :options="categoryOptions"
-						  v-model="selectedCategory"
-						  change-on-select
-						></el-cascader>
+					<el-row v-if="formData.is_week == true">
+						<el-form-item label="备份时间" prop="week_time">
+							<el-input-number v-model="formData.week_time" :min="1" :max="7"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份间隔" prop="week_gap">
+							<el-input-number v-model="formData.week_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" prop="week_num">
+							<el-input-number v-model="formData.week_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.week_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.week_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="formData.week_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置日备份" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="formData.is_day"></el-switch>
 					</el-form-item>
-					<el-form-item label="店铺特点" style="white-space: nowrap;">
-						<span>品牌保证</span>
-						<el-switch on-text="" off-text="" v-model="formData.is_premium"></el-switch>
-						<span>蜂鸟专送</span>
-						<el-switch on-text="" off-text="" v-model="formData.delivery_mode"></el-switch>
-						<span>新开店铺</span>
-						<el-switch on-text="" off-text="" v-model="formData.new"></el-switch>
+					<el-row v-if="formData.is_day == true">
+						<el-form-item label="备份间隔" prop="day_gap">
+							<el-input-number v-model="formData.day_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" prop="day_num">
+							<el-input-number v-model="formData.day_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.day_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.day_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="formData.day_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置粒度备份" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="formData.is_hour"></el-switch>
 					</el-form-item>
-					<el-form-item style="white-space: nowrap;">
-						<span>外卖保</span>
-						<el-switch on-text="" off-text="" v-model="formData.bao"></el-switch>
-						<span>准时达</span>
-						<el-switch on-text="" off-text="" v-model="formData.zhun"></el-switch>
-						<span>开发票</span>
-						<el-switch on-text="" off-text="" v-model="formData.piao"></el-switch>
-					</el-form-item>
-					<el-form-item label="配送费" prop="float_delivery_fee">
-						<el-input-number v-model="formData.float_delivery_fee" :min="0" :max="20"></el-input-number>
-					</el-form-item>
-					<el-form-item label="起送价" prop="float_minimum_order_amount">
-						<el-input-number v-model="formData.float_minimum_order_amount" :min="0" :max="100"></el-input-number>
-					</el-form-item>
-					<el-form-item label="营业时间" style="white-space: nowrap;">
+					<el-row v-if="formData.is_hour == true">
+						<el-form-item label="备份间隔">
+							<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
+								<el-option
+									v-for="item in options"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value">
+								</el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" prop="hour_num">
+							<el-input-number v-model="formData.hour_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.hour_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="formData.hour_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="formData.hour_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="首次备份" style="white-space: nowrap;">
 						<el-time-select
-							placeholder="起始时间"
+							placeholder="执行时间"
 							v-model="formData.startTime"
 							:picker-options="{
-							start: '05:30',
+							start: '00:00',
 							step: '00:15',
-							end: '23:30'
-							}">
-						</el-time-select>
-						<el-time-select
-							placeholder="结束时间"
-							v-model="formData.endTime"
-							:picker-options="{
-							start: '05:30',
-							step: '00:15',
-							end: '23:30',
-							minTime: formData.startTime
+							end: '23:45'
 							}">
 						</el-time-select>
 					</el-form-item>
-
-					<el-form-item label="上传店铺头像">
-						<el-upload
-						  class="avatar-uploader"
-						  :action="baseUrl + '/v1/addimg/shop'"
-						  :show-file-list="false"
-						  :on-success="handleShopAvatarScucess"
-						  :before-upload="beforeAvatarUpload">
-						  <img v-if="formData.image_path" :src="baseImgPath + formData.image_path" class="avatar">
-						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-						</el-upload>
-					</el-form-item>
-					<el-form-item label="上传营业执照">
-						<el-upload
-						  class="avatar-uploader"
-						  :action="baseUrl + '/v1/addimg/shop'"
-						  :show-file-list="false"
-						  :on-success="handleBusinessAvatarScucess"
-						  :before-upload="beforeAvatarUpload">
-						  <img v-if="formData.business_license_image" :src="baseImgPath + formData.business_license_image" class="avatar">
-						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-						</el-upload>
-					</el-form-item>
-					<el-form-item label="上传餐饮服务许可证">
-						<el-upload
-						  class="avatar-uploader"
-						  :action="baseUrl + '/v1/addimg/shop'"
-						  :show-file-list="false"
-						  :on-success="handleServiceAvatarScucess"
-						  :before-upload="beforeAvatarUpload">
-						  <img v-if="formData.catering_service_license_image" :src="baseImgPath + formData.catering_service_license_image" class="avatar">
-						  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-						</el-upload>
-					</el-form-item>
-					<el-form-item label="优惠活动">
-						<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
-						    <el-option
-						      	v-for="item in options"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-						</el-select>
-					</el-form-item>
-					<el-table
-					    :data="activities"
-					    style="min-width: 600px;margin-bottom: 20px;"
-						align="cneter"
-					    :row-class-name="tableRowClassName">
-					    <el-table-column
-					      prop="icon_name"
-					      label="活动标题"
-					      align="cneter"
-					      width="120">
-					    </el-table-column>
-					    <el-table-column
-					      prop="name"
-					      label="活动名称"
-					      align="cneter"
-					      width="120">
-					    </el-table-column>
-					    <el-table-column
-					      prop="description"
-					      align="cneter"
-					      label="活动详情">
-					    </el-table-column>
-					    <el-table-column
-					    	label="操作"
-					    	width="120">
-					    <template slot-scope="scope">
-					        <el-button
-					          size="small"
-					          type="danger"
-					          @click="handleDelete(scope.$index)">删除</el-button>
-					    </template>
-					    </el-table-column>
-					</el-table>
 					<el-form-item class="button_submit">
 						<el-button type="primary" @click="submitForm('formData')">立即创建</el-button>
 					</el-form-item>
@@ -164,30 +150,48 @@
 
 <script>
     import headTop from '@/components/headTop'
-    import {cityGuess, addShop, searchplace, foodCategory} from '@/api/getData'
+    import {addShop, searchplace, foodCategory} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
     export default {
     	data(){
     		return {
     			city: {},
     			formData: {
-					name: '', //店铺名称
-					address: '', //地址
-					latitude: '',
-					longitude: '',
-					description: '', //介绍
-					phone: '',
-					promotion_info: '',
-					float_delivery_fee: 5, //运费
-					float_minimum_order_amount: 20, //起价
-					is_premium: true,
-					delivery_mode: true,
-					new: true,
-					bao: true,
-					zhun: true,
-					piao: true,
+					name: '', //策略名称
+					year_time: 1,
+					month_time: 1,
+					day_time: 1,
+					year_gap: 1,
+					month_gap: 1,
+					week_gap: 1,
+					day_gap: 1,
+					hour_gap: 1,
+					year_num: 10,
+					month_num: 12,
+					week_num: 4,
+					day_num: 7,
+					hour_num: 10,
+					is_year: false,
+					is_month: false,
+					is_week: false,
+					is_day: true,
+					is_hour: false,
+					year_force_full: false,
+					month_force_full: false,
+					week_force_full: false,
+					day_force_full: false,
+					hour_force_full: false,
+					year_quiesce: false,
+					month_quiesce: false,
+					week_quiesce: false,
+					day_quiesce: false,
+					hour_quiesce: false,
+					year_ensurance: false,
+					month_ensurance: false,
+					week_ensurance: false,
+					day_ensurance: false,
+					hour_ensurance: false,
 					startTime: '',
-       	 			endTime: '',
        	 			image_path: '',
        	 			business_license_image: '',
        	 			catering_service_license_image: '',
@@ -195,51 +199,49 @@
 		        },
 		        rules: {
 					name: [
-						{ required: true, message: '请输入店铺名称', trigger: 'blur' },
-					],
-					address: [
-						{ required: true, message: '请输入详细地址', trigger: 'blur' }
-					],
-					phone: [
-						{ required: true, message: '请输入联系电话' },
-						{ type: 'number', message: '电话号码必须是数字' }
+						{ required: true, message: '请输入策略名称', trigger: 'blur' },
 					],
 				},
 				options: [{
-		          	value: '满减优惠',
-		          	label: '满减优惠'
+		          	value: '3',
+		          	label: '15分钟'
 		        }, {
-		          	value: '优惠大酬宾',
-		          	label: '优惠大酬宾'
+		          	value: '6',
+		          	label: '30分钟'
 		        }, {
-		          	value: '新用户立减',
-		          	label: '新用户立减'
+		          	value: '12',
+		          	label: '1小时'
 		        }, {
-		          	value: '进店领券',
-		          	label: '进店领券'
+		          	value: '24',
+		          	label: '2小时'
+		        }, {
+		          	value: '48',
+		          	label: '4小时'
+		        }, {
+		          	value: '96',
+		          	label: '8小时'
+		        }, {
+		          	value: '144',
+		          	label: '12小时'
 		        }],
-       	 		activityValue: '满减优惠',
-				activities: [{
-		        	icon_name: '减',
-		        	name: '满减优惠',
-		        	description: '满30减5，满60减8',
-			    }],
+       	 		activityValue: '15分钟',
+    			encrypt: 'noencrypt',
 			    baseUrl,
 			    baseImgPath,
 			    categoryOptions: [],
-			    selectedCategory: ['快餐便当', '简餐']
     		}
     	},
     	components: {
     		headTop,
     	},
-    	mounted(){
-    		this.initData();
-    	},
+    	//mounted(){
+    	//	this.initData();
+    	//},
     	methods: {
+/*
     		async initData(){
     			try{
-    				this.city = await cityGuess();
+    				//this.city = await cityGuess();
     				const categories = await foodCategory();
     				categories.forEach(item => {
     					if (item.sub_categories.length) {
@@ -264,7 +266,8 @@
     			}catch(err){
     				console.log(err);
     			}
-    		},
+			},
+*/
     		async querySearchAsync(queryString, cb) {
     			if (queryString) {
 	    			try{
@@ -384,9 +387,6 @@
 		    submitForm(formName) {
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
-						Object.assign(this.formData, {activities: this.activities}, {
-							category: this.selectedCategory.join('/')
-						})
 						try{
 							let result = await addShop(this.formData);
 							if (result.status == 1) {
@@ -396,32 +396,29 @@
 					          	});
 					          	this.formData = {
 									name: '', //店铺名称
-									address: '', //地址
-									latitude: '',
-									longitude: '',
-									description: '', //介绍
-									phone: '',
-									promotion_info: '',
-									float_delivery_fee: 5, //运费
-									float_minimum_order_amount: 20, //起价
-									is_premium: true,
-									delivery_mode: true,
-									new: true,
-									bao: true,
-									zhun: true,
-									piao: true,
+									year_time: 1,
+									month_time: 1,
+									day_time: 1,
+									year_gap: 1,
+									month_gap: 1,
+									week_gap: 1,
+									day_gap: 1,
+									hour_gap: 1,
+									year_num: 10,
+									month_num: 12,
+									week_num: 4,
+									day_num: 7,
+									hour_num: 10,
+									is_year: false,
+									is_month: false,
+									is_week: false,
+									is_day: true,
+									is_hour: false,
 									startTime: '',
-				       	 			endTime: '',
 				       	 			image_path: '',
 				       	 			business_license_image: '',
 				       	 			catering_service_license_image: '',
 						        };
-						        this.selectedCategory = ['快餐便当', '简餐'];
-						        this.activities = [{
-						        	icon_name: '减',
-						        	name: '满减优惠',
-						        	description: '满30减5，满60减8',
-							    }];
 							}else{
 								this.$message({
 					            	type: 'error',

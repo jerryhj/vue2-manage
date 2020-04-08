@@ -21,7 +21,7 @@
             initData(){
                 const option = {
                     title : {
-                        text: '用户分布',
+                        text: '被保护虚拟机',
                         subtext: '',
                         x:'center'
                     },

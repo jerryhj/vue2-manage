@@ -5,7 +5,7 @@
 				<el-menu :default-active="defaultActive" style="min-height: 100%;" theme="dark" router>
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 					<el-submenu index="2">
-						<template slot="title"><i class="el-icon-document"></i>项目管理</template>
+						<template slot="title"><i class="el-icon-document"></i>列表管理</template>
 						<el-menu-item index="shopList">备份策略列表</el-menu-item>
 						<el-menu-item index="foodList">被保护虚拟机列表</el-menu-item>
 						<el-menu-item index="orderList">即时恢复虚拟机列表</el-menu-item>
@@ -17,7 +17,7 @@
 					</el-submenu>
 					<el-submenu index="4">
 						<template slot="title"><i class="el-icon-star-on"></i>图表</template>
-						<el-menu-item index="visitor">用户分布</el-menu-item>
+						<el-menu-item index="visitor">被保护虚拟机</el-menu-item>
 						<!-- <el-menu-item index="newMember">用户数据</el-menu-item> -->
 					</el-submenu>
 					<el-submenu index="5">

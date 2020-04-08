@@ -32,7 +32,7 @@
     					throw new Error(res)
     				}
     			}catch(err){
-    				console.log('获取用户分布信息失败',err);
+    				console.log('获取被保护虚拟机信息失败',err);
     			}
     		},
     	}

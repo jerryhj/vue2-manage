@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <head-top></head-top>
-        <p class="explain_text">Clouvm虚拟机数据保护系统 v2.1</p>
+        <p class="explain_text">Clouvm云虚拟机数据保护系统 v2.09</p>
         <p class="explain_text">跨云数据流动：私有云->公有云，公有云->公有云，公有云->私有云</p>
         <p class="explain_text">增量数据备份：有效减少备份数据容量</p>
         <p class="explain_text">持续数据保护：RPO=0</p>

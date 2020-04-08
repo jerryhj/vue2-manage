@@ -71,11 +71,11 @@ export const adminCount = () => fetch('/admin/count');
 /**
  * 获取定位城市
  */
-
+/*
 export const cityGuess = () => fetch('/v1/cities', {
 	type: 'guess'
 });
-
+*/
 /**
  * 添加备份策略
  */
@@ -122,19 +122,19 @@ export const foodCategory = (latitude, longitude) => fetch('/shopping/v2/restaur
  * 获取餐馆列表
  */
 
-export const getResturants = data => fetch('/shopping/restaurants', data);
+export const getResturants = data => fetch('/shopping', data);
 
 /**
  * 获取餐馆详细信息
  */
 
-export const getResturantDetail = restaurant_id => fetch('/shopping/restaurant/' + restaurant_id);
+export const getResturantDetail = restaurant_id => fetch('/shopping/' + restaurant_id);
 
 /**
  * 获取餐馆数量
  */
 
-export const getResturantsCount = () => fetch('/shopping/restaurants/count');
+export const getPolicyCount = () => fetch('/shopping/count');
 
 /**
  * 更新餐馆信息
@@ -146,7 +146,7 @@ export const updateResturant = data => fetch('/shopping/updateshop', data, 'POST
  * 删除餐馆
  */
 
-export const deleteResturant = restaurant_id => fetch('/shopping/restaurant/' + restaurant_id, {}, 'DELETE');
+export const deleteResturant = restaurant_id => fetch('/shopping/' + restaurant_id, {}, 'DELETE');
 
 /**
  * 获取食品列表
