@@ -8,13 +8,13 @@
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="店铺名称">
+                      <el-form-item label="策略名称">
                         <span>{{ props.row.name }}</span>
                       </el-form-item>
-                      <el-form-item label="店铺地址">
+                      <el-form-item label="是否加密">
                         <span>{{ props.row.address }}</span>
                       </el-form-item>
-                      <el-form-item label="店铺介绍">
+                      <el-form-item label="策略详情">
                         <span>{{ props.row.description }}</span>
                       </el-form-item>
                       <el-form-item label="店铺 ID">
@@ -36,15 +36,15 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="店铺名称"
+                  label="策略名称"
                   prop="name">
                 </el-table-column>
                 <el-table-column
-                  label="店铺地址"
+                  label="是否加密"
                   prop="address">
                 </el-table-column>
                 <el-table-column
-                  label="店铺介绍"
+                  label="策略详情"
                   prop="description">
                 </el-table-column>
                 <el-table-column label="操作" width="200">
@@ -125,7 +125,7 @@
 <script>
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
-    import {cityGuess, getResturants, getResturantsCount, foodCategory, updateResturant, searchplace, deleteResturant} from '@/api/getData'
+    import {getResturants, getPolicyCount, foodCategory, updateResturant, searchplace, deleteResturant} from '@/api/getData'
     export default {
         data(){
             return {
@@ -154,8 +154,8 @@
         methods: {
             async initData(){
                 try{
-                    this.city = await cityGuess();
-                    const countData = await getResturantsCount();
+                    //this.city = await cityGuess();
+                    const countData = await getPolicyCount();
                     if (countData.status == 1) {
                         this.count = countData.count;
                     }else{
@@ -193,8 +193,8 @@
                 }
             },
             async getResturants(){
-                const {latitude, longitude} = this.city;
-                const restaurants = await getResturants({latitude, longitude, offset: this.offset, limit: this.limit});
+                //const {latitude, longitude} = this.city;
+                const restaurants = await getResturants({offset: this.offset, limit: this.limit});
                 this.tableData = [];
                 restaurants.forEach(item => {
                     const tableData = {};
@@ -202,10 +202,10 @@
                     tableData.address = item.address;
                     tableData.description = item.description;
                     tableData.id = item.id;
-                    tableData.phone = item.phone;
-                    tableData.rating = item.rating;
-                    tableData.recent_order_num = item.recent_order_num;
-                    tableData.category = item.category;
+                    //tableData.phone = item.phone;
+                    //tableData.rating = item.rating;
+                    //tableData.recent_order_num = item.recent_order_num;
+                    //tableData.category = item.category;
                     tableData.image_path = item.image_path;
                     this.tableData.push(tableData);
                 })
