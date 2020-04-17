@@ -38,7 +38,7 @@
 	  			</el-form>
 	  			<header class="form_header">添加食品</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
-	  				<el-form-item label="食品名称" prop="name">
+	  				<el-form-item label="被保护虚拟机名称" prop="name">
 						<el-input v-model="foodForm.name"></el-input>
 					</el-form-item>
 					<el-form-item label="食品活动" prop="activity">
@@ -193,6 +193,7 @@
     		headTop,
     	},
     	created(){
+/*
     		if (this.$route.query.restaurant_id) {
     			this.restaurant_id = this.$route.query.restaurant_id;
     		}else{
@@ -216,7 +217,8 @@
 		            }
 		          }
 		        })
-    		}
+			}
+*/
     		this.initData();
     	},
     	computed: {

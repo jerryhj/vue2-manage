@@ -158,7 +158,7 @@ export const getFoods = data => fetch('/shopping/v2/foods', data);
  * 获取食品数量
  */
 
-export const getFoodsCount = data => fetch('/shopping/v2/foods/count', data);
+export const getFoodsCount = () => fetch('/shopping/v2/count');
 
 
 /**

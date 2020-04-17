@@ -56,11 +56,11 @@ const routes = [
 			path: '/foodList',
 			component: foodList,
 			meta: ['列表管理', '被保护虚拟机列表'],
+/*
 		},{
 			path: '/orderList',
 			component: orderList,
 			meta: ['列表管理', '即时恢复虚拟机列表'],
-/*
 		},{
 			path: '/adminList',
 			component: adminList,

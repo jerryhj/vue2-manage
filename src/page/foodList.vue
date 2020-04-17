@@ -11,7 +11,7 @@
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="食品名称">
+                      <el-form-item label="被保护虚拟机名称">
                         <span>{{ props.row.name }}</span>
                       </el-form-item>
                       <el-form-item label="餐馆名称">
@@ -42,16 +42,16 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="食品名称"
-                  prop="name">
+                  label="被保护虚拟机名称"
+                  prop="vmname">
                 </el-table-column>
                 <el-table-column
-                  label="食品介绍"
-                  prop="description">
+                  label="当前策略"
+                  prop="policy_name">
                 </el-table-column>
                 <el-table-column
-                  label="评分"
-                  prop="rating">
+                  label="磁盘空间"
+                  prop="realsize">
                 </el-table-column>
                 <el-table-column label="操作" width="160">
                   <template slot-scope="scope">
@@ -221,7 +221,7 @@
         methods: {
             async initData(){
                 try{
-                    const countData = await getFoodsCount({restaurant_id: this.restaurant_id});
+                    const countData = await getFoodsCount();
                     if (countData.status == 1) {
                         this.count = countData.count;
                     }else{
@@ -248,17 +248,14 @@
                 }
             },
             async getFoods(){
-                const Foods = await getFoods({offset: this.offset, limit: this.limit, restaurant_id: this.restaurant_id});
+                const Foods = await getFoods({offset: this.offset, limit: this.limit});
                 this.tableData = [];
                 Foods.forEach((item, index) => {
                     const tableData = {};
-                    tableData.name = item.name;
-                    tableData.item_id = item.item_id;
-                    tableData.description = item.description;
-                    tableData.rating = item.rating;
-                    tableData.month_sales = item.month_sales;
-                    tableData.restaurant_id = item.restaurant_id;
-                    tableData.category_id = item.category_id;
+                    tableData.vmname = item.vmname;
+                    tableData.item_id = item.id;
+                    tableData.policy_name = item.policy_name;
+                    tableData.realsize = item.realsize;
                     tableData.image_path = item.image_path;
                     tableData.specfoods = item.specfoods;
                     tableData.index = index;
