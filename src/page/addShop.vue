@@ -8,13 +8,13 @@
 						<el-input v-model="formData.name"></el-input>
 					</el-form-item>
 					<el-form-item label="策略密码">
-						<el-radio class="radio" v-model="encrypt" label="noencrypt">不加密</el-radio>
-  						<el-radio class="radio" v-model="encrypt" label="default_encrypt">使用缺省密码</el-radio>
-  						<el-radio class="radio" v-model="encrypt" label="use_encrpt">设定密码</el-radio>
+						<el-radio class="radio" v-model="formData.encrypt" label="noencrypt">不加密</el-radio>
+  						<el-radio class="radio" v-model="formData.encrypt" label="default_encrypt">使用缺省密码</el-radio>
+  						<el-radio class="radio" v-model="formData.encrypt" label="use_encrpt">设定密码</el-radio>
 					</el-form-item>
-					<el-row v-if="encrypt == 'use_encrpt'">
-						<el-form-item label="设置密码" prop="promotion_info">
-							<el-input v-model="formData.promotion_info"></el-input>
+					<el-row v-if="formData.encrypt == 'use_encrpt'">
+						<el-form-item label="设置密码" prop="encrpt_password">
+							<el-input v-model="formData.encrpt_password"></el-input>
 						</el-form-item>
 					</el-row>
 					<el-form-item label="设置年备份" style="white-space: nowrap;">
@@ -128,17 +128,6 @@
 							<el-switch on-text="" off-text="" v-model="formData.hour_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
-					<el-form-item label="首次备份" style="white-space: nowrap;">
-						<el-time-select
-							placeholder="执行时间"
-							v-model="formData.startTime"
-							:picker-options="{
-							start: '00:00',
-							step: '00:15',
-							end: '23:45'
-							}">
-						</el-time-select>
-					</el-form-item>
 					<el-form-item class="button_submit">
 						<el-button type="primary" @click="submitForm('formData')">立即创建</el-button>
 					</el-form-item>
@@ -158,6 +147,8 @@
     			city: {},
     			formData: {
 					name: '', //策略名称
+					encrypt: 'noencrypt',
+					encrpt_password: '',
 					year_time: 1,
 					month_time: 1,
 					day_time: 1,
@@ -191,7 +182,6 @@
 					week_ensurance: false,
 					day_ensurance: false,
 					hour_ensurance: false,
-					startTime: '',
        	 			image_path: '',
        	 			business_license_image: '',
        	 			catering_service_license_image: '',
@@ -225,7 +215,6 @@
 		          	label: '12小时'
 		        }],
        	 		activityValue: '15分钟',
-    			encrypt: 'noencrypt',
 			    baseUrl,
 			    baseImgPath,
 			    categoryOptions: [],
@@ -396,6 +385,8 @@
 					          	});
 					          	this.formData = {
 									name: '', //店铺名称
+									encrypt: '',
+									encrpt_password: '',
 									year_time: 1,
 									month_time: 1,
 									day_time: 1,
@@ -414,7 +405,21 @@
 									is_week: false,
 									is_day: true,
 									is_hour: false,
-									startTime: '',
+									year_force_full: false,
+									month_force_full: false,
+									week_force_full: false,
+									day_force_full: false,
+									hour_force_full: false,
+									year_quiesce: false,
+									month_quiesce: false,
+									week_quiesce: false,
+									day_quiesce: false,
+									hour_quiesce: false,
+									year_ensurance: false,
+									month_ensurance: false,
+									week_ensurance: false,
+									day_ensurance: false,
+									hour_ensurance: false,
 				       	 			image_path: '',
 				       	 			business_license_image: '',
 				       	 			catering_service_license_image: '',

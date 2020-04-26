@@ -14,23 +14,20 @@
                       <el-form-item label="是否加密">
                         <span>{{ props.row.address }}</span>
                       </el-form-item>
-                      <el-form-item label="策略详情">
-                        <span>{{ props.row.description }}</span>
+                      <el-form-item label="年备份">
+                        <span>{{ props.row.year }}</span>
                       </el-form-item>
-                      <el-form-item label="店铺 ID">
-                        <span>{{ props.row.id }}</span>
+                      <el-form-item label="月备份">
+                        <span>{{ props.row.month }}</span>
                       </el-form-item>
-                      <el-form-item label="联系电话">
-                        <span>{{ props.row.phone }}</span>
+                      <el-form-item label="周备份">
+                        <span>{{ props.row.week }}</span>
                       </el-form-item>
-                      <el-form-item label="评分">
-                        <span>{{ props.row.rating }}</span>
+                      <el-form-item label="日备份">
+                        <span>{{ props.row.day }}</span>
                       </el-form-item>
-                      <el-form-item label="销售量">
-                        <span>{{ props.row.recent_order_num }}</span>
-                      </el-form-item>
-                      <el-form-item label="分类">
-                        <span>{{ props.row.category }}</span>
+                      <el-form-item label="粒度备份">
+                        <span>{{ props.row.hour }}</span>
                       </el-form-item>
                     </el-form>
                   </template>
@@ -73,11 +70,134 @@
                   :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改店铺信息" v-model="dialogFormVisible">
+            <el-dialog title="修改备份策略" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
-                    <el-form-item label="店铺名称" label-width="100px">
+                    <el-form-item label="策略名称" label-width="100px">
                         <el-input v-model="selectTable.name" auto-complete="off"></el-input>
                     </el-form-item>
+
+					<el-form-item label="策略密码" label-width="100px">
+						<el-radio class="radio" v-model="selectTable.encrypt" label="noencrypt">不加密</el-radio>
+  						<el-radio class="radio" v-model="selectTable.encrypt" label="default_encrypt">使用缺省密码</el-radio>
+  						<el-radio class="radio" v-model="selectTable.encrypt" label="use_encrpt">设定密码</el-radio>
+					</el-form-item>
+					<el-row v-if="selectTable.encrypt == 'use_encrpt'">
+						<el-form-item label="设置密码" prop="encrpt_password">
+							<el-input v-model="selectTable.encrpt_password"></el-input>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置年备份" label-width="100px" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_year"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_year == true">
+						<el-form-item label="备份时间" label-width="100px" prop="year_time">
+							<el-input-number v-model="selectTable.year_time" :min="1" :max="365"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份间隔" label-width="100px" prop="year_gap">
+							<el-input-number v-model="selectTable.year_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" label-width="100px" prop="year_num">
+							<el-input-number v-model="selectTable.year_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.year_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.year_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.year_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置月备份" label-width="100px" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_month"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_month == true">
+						<el-form-item label="备份时间" label-width="100px" prop="month_time">
+							<el-input-number v-model="selectTable.month_time" :min="1" :max="31"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份间隔" label-width="100px" prop="month_gap">
+							<el-input-number v-model="selectTable.month_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" label-width="100px" prop="month_num">
+							<el-input-number v-model="selectTable.month_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.month_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.month_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.month_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置周备份" label-width="100px" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_week"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_week == true">
+						<el-form-item label="备份时间" label-width="100px" prop="week_time">
+							<el-input-number v-model="selectTable.week_time" :min="1" :max="7"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份间隔" label-width="100px" prop="week_gap">
+							<el-input-number v-model="selectTable.week_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" label-width="100px" prop="week_num">
+							<el-input-number v-model="selectTable.week_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.week_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.week_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.week_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置日备份" label-width="100px" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_day"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_day == true">
+						<el-form-item label="备份间隔" label-width="100px" prop="day_gap">
+							<el-input-number v-model="selectTable.day_gap" :min="1" :max="12"></el-input-number>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" label-width="100px" prop="day_num">
+							<el-input-number v-model="selectTable.day_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.day_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.day_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.day_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+					<el-form-item label="设置粒度备份" label-width="100px" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_hour"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_hour == true">
+						<el-form-item label="备份间隔" label-width="100px">
+							<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
+								<el-option
+									v-for="item in options"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value">
+								</el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="保留备份副本数" label-width="100px" prop="hour_num">
+							<el-input-number v-model="selectTable.hour_num" :min="1" :max="100"></el-input-number>
+						</el-form-item>
+						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
+							<span>强制全备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.hour_force_full"></el-switch>
+							<span>执行一致性备份</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.hour_quiesce"></el-switch>
+							<span>备份验证</span>
+							<el-switch on-text="" off-text="" v-model="selectTable.hour_ensurance"></el-switch>
+						</el-form-item>
+					</el-row>
+
                     <el-form-item label="详细地址" label-width="100px">
                         <el-autocomplete
                           v-model="address.address"
@@ -202,6 +322,7 @@
                     tableData.address = item.address;
                     tableData.description = item.description;
                     tableData.id = item.id;
+                    tableData.year = item.yearly_sched_id;
                     //tableData.phone = item.phone;
                     //tableData.rating = item.rating;
                     //tableData.recent_order_num = item.recent_order_num;
@@ -236,7 +357,7 @@
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '删除店铺成功'
+                            message: '删除备份策略成功'
                         });
                         this.tableData.splice(index, 1);
                     }else{
@@ -247,7 +368,7 @@
                         type: 'error',
                         message: err.message
                     });
-                    console.log('删除店铺失败')
+                    console.log('删除备份策略失败')
                 }
             },
             async querySearchAsync(queryString, cb) {

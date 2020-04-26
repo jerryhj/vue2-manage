@@ -12,31 +12,28 @@
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                       <el-form-item label="被保护虚拟机名称">
-                        <span>{{ props.row.name }}</span>
+                        <span>{{ props.row.vmname }}</span>
                       </el-form-item>
-                      <el-form-item label="餐馆名称">
-                        <span>{{ props.row.restaurant_name }}</span>
+                      <el-form-item label="当前策略">
+                        <span>{{ props.row.policy_name }}</span>
                       </el-form-item>
-                      <el-form-item label="食品 ID">
-                        <span>{{ props.row.item_id }}</span>
+                      <el-form-item label="磁盘空间">
+                        <span>{{ props.row.realsize }}</span>
                       </el-form-item>
-                      <el-form-item label="餐馆 ID">
-                        <span>{{ props.row.restaurant_id }}</span>
+                      <el-form-item label="当前状态">
+                        <span>{{ props.row.status }}</span>
                       </el-form-item>
-                      <el-form-item label="食品介绍">
-                        <span>{{ props.row.description }}</span>
+                      <el-form-item label="备份优先级">
+                        <span>{{ props.row.priv }}</span>
                       </el-form-item>
-                      <el-form-item label="餐馆地址">
-                        <span>{{ props.row.restaurant_address }}</span>
+                      <el-form-item label="所在区域">
+                        <span>{{ props.row.area }}</span>
                       </el-form-item>
-                      <el-form-item label="食品评分">
-                        <span>{{ props.row.rating }}</span>
+                      <el-form-item label="下次备份时间">
+                        <span>{{ props.row.next_time }}</span>
                       </el-form-item>
-                      <el-form-item label="食品分类">
-                        <span>{{ props.row.category_name }}</span>
-                      </el-form-item>
-                      <el-form-item label="月销量">
-                        <span>{{ props.row.month_sales }}</span>
+                      <el-form-item label="最近备份完成时间">
+                        <span>{{ props.row.latest_backup_endtime }}</span>
                       </el-form-item>
                     </el-form>
                   </template>
@@ -75,88 +72,37 @@
                   :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改食品信息" v-model="dialogFormVisible">
+            <el-dialog title="修改被保护虚拟机信息" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
-                    <el-form-item label="食品名称" label-width="100px">
-                        <el-input v-model="selectTable.name" auto-complete="off"></el-input>
+                    <el-form-item label="虚拟机名称" label-width="100px">
+                        <el-input v-model="selectTable.vmname" auto-complete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="食品介绍" label-width="100px">
-                        <el-input v-model="selectTable.description"></el-input>
-                    </el-form-item>
-                    <el-form-item label="食品分类" label-width="100px">
-	                    <el-select v-model="selectIndex" :placeholder="selectMenu.label" @change="handleSelect">
+					<el-form-item label="备份优先级" label-width="100px" prop="priv">
+						<el-select v-model="selectTable.priv" placeholder="请选择">
 						    <el-option
-						      v-for="item in menuOptions"
-						      :key="item.value"
-						      :label="item.label"
-						      :value="item.index">
+						      	v-for="item in priv"
+						      	:key="item.value"
+						      	:label="item.label"
+						      	:value="item.value">
 						    </el-option>
-						</el-select>
-                    </el-form-item>
-                    <el-form-item label="食品图片" label-width="100px">
-                        <el-upload
-                          class="avatar-uploader"
-                          :action="baseUrl + '/v1/addimg/food'"
-                          :show-file-list="false"
-                          :on-success="handleServiceAvatarScucess"
-                          :before-upload="beforeAvatarUpload">
-                          <img v-if="selectTable.image_path" :src="baseImgPath + selectTable.image_path" class="avatar">
-                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
+					 	</el-select>
+					</el-form-item>
+					<el-form-item label="备份策略" label-width="100px" prop="policy">
+						<el-select v-model="selectTable.policy" placeholder="请选择">
+						    <el-option
+						      	v-for="item in policy"
+						      	:key="item.value"
+						      	:label="item.label"
+						      	:value="item.value">
+						    </el-option>
+					 	</el-select>
+					</el-form-item>
                 </el-form>
-                <el-row style="overflow: auto; text-align: center;">
-	                <el-table
-				    :data="specs"
-				    style="margin-bottom: 20px;"
-				    :row-class-name="tableRowClassName">
-					    <el-table-column
-					      prop="specs"
-					      label="规格">
-					    </el-table-column>
-					    <el-table-column
-					      prop="packing_fee"
-					      label="包装费">
-					    </el-table-column>
-					    <el-table-column
-					      prop="price"
-					      label="价格">
-					    </el-table-column>
-					    <el-table-column label="操作" >
-					    <template slot-scope="scope">
-					        <el-button
-					          size="small"
-					          type="danger"
-					          @click="deleteSpecs(scope.$index)">删除</el-button>
-					    </template>
-					    </el-table-column>
-					</el-table>
-					<el-button type="primary" @click="specsFormVisible = true" style="margin-bottom: 10px;">添加规格</el-button>
-				</el-row>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="updateFood">确 定</el-button>
               </div>
             </el-dialog>
-
-
-            <el-dialog title="添加规格" v-model="specsFormVisible">
-			  	<el-form :rules="specsFormrules" :model="specsForm">
-				    <el-form-item label="规格" label-width="100px" prop="specs">
-				     	<el-input v-model="specsForm.specs" auto-complete="off"></el-input>
-				    </el-form-item>
-				    <el-form-item label="包装费" label-width="100px">
-						<el-input-number v-model="specsForm.packing_fee" :min="0" :max="100"></el-input-number>
-					</el-form-item>
-					<el-form-item label="价格" label-width="100px">
-						<el-input-number v-model="specsForm.price" :min="0" :max="10000"></el-input-number>
-					</el-form-item>
-			  	</el-form>
-			  <div slot="footer" class="dialog-footer">
-			    <el-button @click="specsFormVisible = false">取 消</el-button>
-			    <el-button type="primary" @click="addspecs">确 定</el-button>
-			  </div>
-			</el-dialog>
         </div>
     </div>
 </template>
@@ -164,7 +110,7 @@
 <script>
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
-    import {getFoods, getFoodsCount, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
+    import {getFoods, getFoodsCount, getCategory, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
     export default {
         data(){
             return {
@@ -176,6 +122,18 @@
                 limit: 20,
                 count: 0,
                 tableData: [],
+    			priv: [{
+		          	value: 9,
+		          	label: '低'
+		        }, {
+		          	value: 5,
+		          	label: '中'
+		        }, {
+		          	value: 1,
+		          	label: '高'
+		        },],
+    			policy: [{
+		        },],
                 currentPage: 1,
                 selectTable: {},
                 dialogFormVisible: false,
@@ -231,6 +189,22 @@
                 }catch(err){
                     console.log('获取数据失败', err);
                 }
+
+    			try{
+    				const result = await getCategory();
+	    			if (result.status == 1) {
+	    				result.category_list.map((item, index) => {
+	    					item.value = item.name;
+	    					item.label = item.name;
+	    				})
+						this.selectTable.policy = result.category_list;
+						this.policy = result.category_list;
+	    			}else{
+	    				console.log(result)
+	    			}
+    			}catch(err){
+    				console.log(err)
+    			}
             },
             async getMenu(){
             	this.menuOptions = [];
@@ -255,7 +229,14 @@
                     tableData.vmname = item.vmname;
                     tableData.item_id = item.id;
                     tableData.policy_name = item.policy_name;
+                    tableData.policy = item.policy_name;
                     tableData.realsize = item.realsize;
+                    tableData.status = item.status;
+                    tableData.priority = item.priority;
+                    tableData.priv = item.priority;
+                    tableData.area = item.area;
+                    tableData.next_time = item.next_time;
+                    tableData.latest_backup_endtime = item.latest_backup_endtime;
                     tableData.image_path = item.image_path;
                     tableData.specfoods = item.specfoods;
                     tableData.index = index;
@@ -298,6 +279,7 @@
             },
             handleEdit(row) {
             	this.getSelectItemData(row, 'edit')
+                //this.selectTable = row;
                 this.dialogFormVisible = true;
             },
             async getSelectItemData(row, type){
@@ -324,7 +306,7 @@
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '删除食品成功'
+                            message: '删除被保护虚拟机成功'
                         });
                         this.tableData.splice(index, 1);
                     }else{
@@ -335,7 +317,7 @@
                         type: 'error',
                         message: err.message
                     });
-                    console.log('删除食品失败')
+                    console.log('删除被保护虚拟机失败')
                 }
             },
             handleServiceAvatarScucess(res, file) {
