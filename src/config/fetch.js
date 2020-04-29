@@ -1,4 +1,5 @@
 import { baseUrl } from './env'
+import env from './env'
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
@@ -22,7 +23,8 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			method: type,
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + env.token
 			},
 			mode: "cors",
 			cache: "force-cache"

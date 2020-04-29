@@ -18,6 +18,7 @@
 <script>
 	import {signout} from '@/api/getData'
 	import {baseImgPath} from '@/config/env'
+	import env from '@/config/env'
 	import {mapActions, mapState} from 'vuex'
 
     export default {
@@ -40,6 +41,13 @@
 				if (command == 'home') {
 					this.$router.push('/manage');
 				}else if(command == 'signout'){
+					this.$message({
+						type: 'success',
+						message: '退出成功'
+					});
+					this.$router.push('/');
+					env.token = ''
+/*
 					const res = await signout()
 					if (res.status == 1) {
 						this.$message({
@@ -53,6 +61,7 @@
 	                        message: res.message
 	                    });
 					}
+*/
 				}
 			},
 		}

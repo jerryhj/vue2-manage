@@ -6,6 +6,7 @@
  * baseImgPath: 图片存放地址
  * 
  */
+let token = ''; 
 let baseUrl = ''; 
 let routerMode = 'hash';
 let baseImgPath;
@@ -23,4 +24,8 @@ export {
 	baseUrl,
 	routerMode,
 	baseImgPath
+}
+
+export default {
+	token
 }
