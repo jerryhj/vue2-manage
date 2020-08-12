@@ -27,7 +27,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 				'Authorization': 'Bearer ' + env.token
 			},
 			mode: "cors",
-			cache: "force-cache"
+			cache: "no-cache"
 		}
 
 		if (type == 'POST') {

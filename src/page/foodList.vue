@@ -158,6 +158,10 @@
         	this.restaurant_id = this.$route.query.restaurant_id;
             this.initData();
         },
+        activated(){
+        	this.restaurant_id = this.$route.query.restaurant_id;
+            this.initData();
+        },
         computed: {
         	specs: function (){
         		let specs = [];

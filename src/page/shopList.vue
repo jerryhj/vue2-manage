@@ -266,7 +266,9 @@
         },
         created(){
             this.initData();
-            console.log(11111)
+        },
+        activated(){
+            this.initData();
         },
     	components: {
     		headTop,
