@@ -104,7 +104,7 @@
 							<el-switch on-text="" off-text="" v-model="selectTable.year_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.year_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.year_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -126,7 +126,7 @@
 							<el-switch on-text="" off-text="" v-model="selectTable.month_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.month_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.month_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -148,7 +148,7 @@
 							<el-switch on-text="" off-text="" v-model="selectTable.week_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.week_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.week_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -167,7 +167,7 @@
 							<el-switch on-text="" off-text="" v-model="selectTable.day_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.day_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.day_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -193,7 +193,7 @@
 							<el-switch on-text="" off-text="" v-model="selectTable.hour_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.hour_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="selectTable.hour_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
