@@ -35,7 +35,7 @@
 							<el-switch on-text="" off-text="" v-model="formData.year_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="formData.year_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="formData.year_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -57,7 +57,7 @@
 							<el-switch on-text="" off-text="" v-model="formData.month_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="formData.month_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="formData.month_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -79,7 +79,7 @@
 							<el-switch on-text="" off-text="" v-model="formData.week_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="formData.week_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="formData.week_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -98,7 +98,7 @@
 							<el-switch on-text="" off-text="" v-model="formData.day_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="formData.day_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="formData.day_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -124,7 +124,7 @@
 							<el-switch on-text="" off-text="" v-model="formData.hour_force_full"></el-switch>
 							<span>执行一致性备份</span>
 							<el-switch on-text="" off-text="" v-model="formData.hour_quiesce"></el-switch>
-							<span>备份验证</span>
+							<span>副本实时待机</span>
 							<el-switch on-text="" off-text="" v-model="formData.hour_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
@@ -139,7 +139,7 @@
 
 <script>
     import headTop from '@/components/headTop'
-    import {addShop, searchplace, foodCategory} from '@/api/getData'
+    import {addPolicy, searchplace, foodCategory} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
     export default {
     	data(){
@@ -377,7 +377,7 @@
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
 						try{
-							let result = await addShop(this.formData);
+							let result = await addPolicy(this.formData);
 							if (result.status == 1) {
 								this.$message({
 					            	type: 'success',

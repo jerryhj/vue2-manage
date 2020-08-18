@@ -6,13 +6,15 @@
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>列表管理</template>
-						<el-menu-item index="shopList">备份策略列表</el-menu-item>
-						<el-menu-item index="foodList">被保护虚拟机列表</el-menu-item>
+						<el-menu-item index="policyList">备份策略列表</el-menu-item>
+						<el-menu-item index="vmList">被保护虚拟机列表</el-menu-item>
+						<el-menu-item index="instantvmList">即时恢复虚拟机列表</el-menu-item>
 					</el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-plus"></i>添加项目</template>
-						<el-menu-item index="addShop">添加备份策略</el-menu-item>
-						<el-menu-item index="addGoods">添加被保护虚拟机</el-menu-item>
+						<el-menu-item index="addPolicy">添加备份策略</el-menu-item>
+						<el-menu-item index="addVM">添加被保护虚拟机</el-menu-item>
+						<el-menu-item index="addInstantVM">添加即时恢复虚拟机</el-menu-item>
 					</el-submenu>
 					<el-submenu index="4">
 						<template slot="title"><i class="el-icon-star-on"></i>图表</template>

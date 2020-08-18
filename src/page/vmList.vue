@@ -11,15 +11,6 @@
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="被保护虚拟机名称">
-                        <span>{{ props.row.vmname }}</span>
-                      </el-form-item>
-                      <el-form-item label="当前策略">
-                        <span>{{ props.row.policy_name }}</span>
-                      </el-form-item>
-                      <el-form-item label="磁盘空间">
-                        <span>{{ props.row.realsize }}</span>
-                      </el-form-item>
                       <el-form-item label="当前状态">
                         <span>{{ props.row.status }}</span>
                       </el-form-item>
@@ -28,6 +19,9 @@
                       </el-form-item>
                       <el-form-item label="所在区域">
                         <span>{{ props.row.area }}</span>
+                      </el-form-item>
+                      <el-form-item label="备份至">
+                        <span>{{ props.row.s3area }}</span>
                       </el-form-item>
                       <el-form-item label="下次备份时间">
                         <span>{{ props.row.next_time }}</span>

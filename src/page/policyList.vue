@@ -51,10 +51,6 @@
                       @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button
                       size="mini"
-                      type="Success"
-                      @click="addFood(scope.$index, scope.row)">添加食品</el-button>
-                    <el-button
-                      size="mini"
                       type="danger"
                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                   </template>
@@ -351,7 +347,7 @@
                 }
             },
             addFood(index, row){
-                this.$router.push({ path: 'addGoods', query: { restaurant_id: row.id }})
+                this.$router.push({ path: 'addVM', query: { restaurant_id: row.id }})
             },
             async handleDelete(index, row) {
                 try{

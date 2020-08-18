@@ -148,7 +148,7 @@
 		          cancelButtonText: '取消',
 		          beforeClose: (action, instance, done) => {
 		            if (action === 'confirm') {
-		              this.$router.push('/shopList');
+		              this.$router.push('/policyList');
 		              done();
 		            } else {
 		            	this.$message({

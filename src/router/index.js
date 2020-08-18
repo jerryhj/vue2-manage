@@ -6,12 +6,13 @@ Vue.use(Router)
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
-const addShop = r => require.ensure([], () => r(require('@/page/addShop')), 'addShop');
-const addGoods = r => require.ensure([], () => r(require('@/page/addGoods')), 'addGoods');
+const addPolicy = r => require.ensure([], () => r(require('@/page/addPolicy')), 'addPolicy');
+const addVM = r => require.ensure([], () => r(require('@/page/addVM')), 'addVM');
+const addInstantVM = r => require.ensure([], () => r(require('@/page/addInstantVM')), 'addInstantVM');
 const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
-const shopList = r => require.ensure([], () => r(require('@/page/shopList')), 'shopList');
-const foodList = r => require.ensure([], () => r(require('@/page/foodList')), 'foodList');
-const orderList = r => require.ensure([], () => r(require('@/page/orderList')), 'orderList');
+const policyList = r => require.ensure([], () => r(require('@/page/policyList')), 'policyList');
+const vmList = r => require.ensure([], () => r(require('@/page/vmList')), 'vmList');
+const instantvmList = r => require.ensure([], () => r(require('@/page/instantvmList')), 'instantvmList');
 const adminList = r => require.ensure([], () => r(require('@/page/adminList')), 'adminList');
 const visitor = r => require.ensure([], () => r(require('@/page/visitor')), 'visitor');
 const newMember = r => require.ensure([], () => r(require('@/page/newMember')), 'newMember');
@@ -35,13 +36,17 @@ const routes = [
 			component: home,
 			meta: [],
 		},{
-			path: '/addShop',
-			component: addShop,
+			path: '/addPolicy',
+			component: addPolicy,
 			meta: ['添加项目', '添加备份策略'],
 		},{
-			path: '/addGoods',
-			component: addGoods,
+			path: '/addVM',
+			component: addVM,
 			meta: ['添加项目', '添加被保护虚拟机'],
+		},{
+			path: '/addInstantVM',
+			component: addInstantVM,
+			meta: ['添加项目', '添加即时恢复虚拟机'],
 /*
 		},{
 			path: '/userList',
@@ -49,18 +54,18 @@ const routes = [
 			meta: ['列表管理', '用户列表'],
 */
 		},{
-			path: '/shopList',
-			component: shopList,
+			path: '/policyList',
+			component: policyList,
 			meta: ['列表管理', '备份策略列表'],
 		},{
-			path: '/foodList',
-			component: foodList,
+			path: '/vmList',
+			component: vmList,
 			meta: ['列表管理', '被保护虚拟机列表'],
-/*
 		},{
-			path: '/orderList',
-			component: orderList,
+			path: '/instantvmList',
+			component: instantvmList,
 			meta: ['列表管理', '即时恢复虚拟机列表'],
+/*
 		},{
 			path: '/adminList',
 			component: adminList,
