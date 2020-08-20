@@ -185,6 +185,13 @@
                     }
                     this.getFoods();
                 }catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    //env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
                     console.log('获取数据失败', err);
                 }
 
@@ -233,6 +240,7 @@
                     tableData.priority = item.priority;
                     tableData.priv = item.priority;
                     tableData.area = item.area;
+                    tableData.s3area = item.s3area;
                     tableData.next_time = item.next_time;
                     tableData.latest_backup_endtime = item.latest_backup_endtime;
                     tableData.image_path = item.image_path;
@@ -240,6 +248,11 @@
                     tableData.index = index;
                     this.tableData.push(tableData);
                 })
+                if (result.message == undefined) {
+                    this.$router.push('/');
+                    result.message = "会话过期，请重新登录"
+                    //env.token = ''
+                }
             },
             tableRowClassName(row, index) {
 		        if (index === 1) {

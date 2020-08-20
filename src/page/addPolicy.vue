@@ -425,6 +425,11 @@
 				       	 			catering_service_license_image: '',
 						        };
 							}else{
+								if (result.message == undefined) {
+									this.$router.push('/');
+									result.message = "会话过期，请重新登录"
+									//env.token = ''
+								}
 								this.$message({
 					            	type: 'error',
 					            	message: result.message

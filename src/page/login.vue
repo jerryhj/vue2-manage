@@ -13,11 +13,11 @@
 						<el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
 					</el-form-item>
 					<el-form-item>
-				    	<el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登陆</el-button>
+				    	<el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登录</el-button>
 				  	</el-form-item>
 				</el-form>
-				<p class="tip">温馨提示：</p>
-				<p class="tip">未登录过的新用户，自动注册</p>
+				<p class="tip">系统公测中</p>
+				<p class="tip">未登录过的新用户，请联系管理员获得账号</p>
 				<p class="tip">注册过的用户可凭账号密码登录</p>
 	  		</section>
 	  	</transition>

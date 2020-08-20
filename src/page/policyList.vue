@@ -281,6 +281,13 @@
                     }
                     this.getResturants();
                 }catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    //env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
                     console.log('获取数据失败', err);
                 }
             },
