@@ -11,23 +11,14 @@
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="当前状态">
-                        <span>{{ props.row.status }}</span>
-                      </el-form-item>
-                      <el-form-item label="备份优先级">
-                        <span>{{ props.row.priv }}</span>
-                      </el-form-item>
                       <el-form-item label="所在区域">
                         <span>{{ props.row.area }}</span>
                       </el-form-item>
                       <el-form-item label="备份至">
                         <span>{{ props.row.s3area }}</span>
                       </el-form-item>
-                      <el-form-item label="下次备份时间">
+                      <el-form-item label="首次备份时间">
                         <span>{{ props.row.next_time }}</span>
-                      </el-form-item>
-                      <el-form-item label="最近备份完成时间">
-                        <span>{{ props.row.latest_backup_endtime }}</span>
                       </el-form-item>
                     </el-form>
                   </template>
@@ -41,8 +32,8 @@
                   prop="policy_name">
                 </el-table-column>
                 <el-table-column
-                  label="磁盘空间"
-                  prop="realsize">
+                  label="备份优先级"
+                  prop="priv">
                 </el-table-column>
                 <el-table-column label="操作" width="160">
                   <template slot-scope="scope">
@@ -66,7 +57,7 @@
                   :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改被保护虚拟机信息" v-model="dialogFormVisible">
+            <el-dialog title="修改待部署虚拟机信息" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
                     <el-form-item label="虚拟机名称" label-width="100px">
                         <el-input v-model="selectTable.vmname" auto-complete="off"></el-input>
@@ -105,7 +96,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getFoods, getFoodsCount, getCategory, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
+    import {refresh, getUndepolyVMs, getUndepolyVMCount, getCategory, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
     export default {
         data(){
             return {
@@ -178,13 +169,13 @@
         methods: {
             async initData(){
                 try{
-                    const countData = await getFoodsCount();
+                    const countData = await getUndepolyVMCount();
                     if (countData.status == 1) {
                         this.count = countData.count;
                     }else{
                         throw new Error('获取数据失败');
                     }
-                    this.getFoods();
+                    this.getUndepolyVMs();
                     const res = await refresh();
 					if (res.token) {
                         env.token = res.token;
@@ -231,8 +222,8 @@
                     console.log('获取食品种类失败', err);
                 }
             },
-            async getFoods(){
-                const Foods = await getFoods({offset: this.offset, limit: this.limit});
+            async getUndepolyVMs(){
+                const Foods = await getUndepolyVMs({offset: this.offset, limit: this.limit});
                 this.tableData = [];
                 Foods.forEach((item, index) => {
                     const tableData = {};
@@ -240,14 +231,11 @@
                     tableData.item_id = item.id;
                     tableData.policy_name = item.policy_name;
                     tableData.policy = item.policy_name;
-                    tableData.realsize = item.realsize;
-                    tableData.status = item.status;
                     tableData.priority = item.priority;
                     tableData.priv = item.priority;
                     tableData.area = item.area;
                     tableData.s3area = item.s3area;
                     tableData.next_time = item.next_time;
-                    tableData.latest_backup_endtime = item.latest_backup_endtime;
                     tableData.image_path = item.image_path;
                     tableData.specfoods = item.specfoods;
                     tableData.index = index;
@@ -317,7 +305,7 @@
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '删除被保护虚拟机成功'
+                            message: '删除待部署虚拟机成功'
                         });
                         this.tableData.splice(index, 1);
                     }else{
@@ -328,7 +316,7 @@
                         type: 'error',
                         message: err.message
                     });
-                    console.log('删除被保护虚拟机失败')
+                    console.log('删除待部署虚拟机失败')
                 }
             },
             handleServiceAvatarScucess(res, file) {

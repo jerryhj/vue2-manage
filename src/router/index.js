@@ -11,6 +11,7 @@ const addVM = r => require.ensure([], () => r(require('@/page/addVM')), 'addVM')
 const addInstantVM = r => require.ensure([], () => r(require('@/page/addInstantVM')), 'addInstantVM');
 const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
 const policyList = r => require.ensure([], () => r(require('@/page/policyList')), 'policyList');
+const undepolyvmList = r => require.ensure([], () => r(require('@/page/undepolyvmList')), 'undepolyvmList');
 const vmList = r => require.ensure([], () => r(require('@/page/vmList')), 'vmList');
 const instantvmList = r => require.ensure([], () => r(require('@/page/instantvmList')), 'instantvmList');
 const adminList = r => require.ensure([], () => r(require('@/page/adminList')), 'adminList');
@@ -57,6 +58,10 @@ const routes = [
 			path: '/policyList',
 			component: policyList,
 			meta: ['列表管理', '备份策略列表'],
+		},{
+			path: '/undepolyvmList',
+			component: undepolyvmList,
+			meta: ['列表管理', '待部署虚拟机列表'],
 		},{
 			path: '/vmList',
 			component: vmList,

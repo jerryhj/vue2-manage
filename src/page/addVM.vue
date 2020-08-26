@@ -70,8 +70,9 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {getCategory, addCategory, addFood} from '@/api/getData'
+    import {refresh, getCategory, addCategory, addFood} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
+	import env from '@/config/env'
     export default {
     	data(){
     		return {
@@ -320,11 +321,15 @@
 							          	price: 20,
 				    				}],
 				    			}
+								const res = await refresh();
+								if (res.token) {
+									env.token = res.token;
+								}
 							}else{
 								if (result.message == undefined) {
 									this.$router.push('/');
 									result.message = "会话过期，请重新登录"
-									//env.token = ''
+									env.token = ''
 								}
 								this.$message({
 					            	type: 'error',

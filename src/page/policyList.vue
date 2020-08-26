@@ -193,41 +193,6 @@
 							<el-switch on-text="" off-text="" v-model="selectTable.hour_ensurance"></el-switch>
 						</el-form-item>
 					</el-row>
-
-                    <el-form-item label="详细地址" label-width="100px">
-                        <el-autocomplete
-                          v-model="address.address"
-                          :fetch-suggestions="querySearchAsync"
-                          placeholder="请输入地址"
-                          style="width: 100%;"
-                          @select="addressSelect"
-                        ></el-autocomplete>
-                        <span>当前城市：{{city.name}}</span>
-                    </el-form-item>
-                    <el-form-item label="店铺介绍" label-width="100px">
-                        <el-input v-model="selectTable.description"></el-input>
-                    </el-form-item>
-                    <el-form-item label="联系电话" label-width="100px">
-                        <el-input v-model="selectTable.phone"></el-input>
-                    </el-form-item>
-                    <el-form-item label="店铺分类" label-width="100px">
-                        <el-cascader
-                          :options="categoryOptions"
-                          v-model="selectedCategory"
-                          change-on-select
-                        ></el-cascader>
-                    </el-form-item>
-                    <el-form-item label="商铺图片" label-width="100px">
-                        <el-upload
-                          class="avatar-uploader"
-                          :action="baseUrl + '/v1/addimg/shop'"
-                          :show-file-list="false"
-                          :on-success="handleServiceAvatarScucess"
-                          :before-upload="beforeAvatarUpload">
-                          <img v-if="selectTable.image_path" :src="baseImgPath + selectTable.image_path" class="avatar">
-                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -241,7 +206,8 @@
 <script>
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
-    import {getResturants, getPolicyCount, foodCategory, updateResturant, searchplace, deleteResturant} from '@/api/getData'
+	import env from '@/config/env'
+    import {refresh, getResturants, getPolicyCount, foodCategory, updateResturant, deleteResturant} from '@/api/getData'
     export default {
         data(){
             return {
@@ -280,10 +246,14 @@
                         throw new Error('获取数据失败');
                     }
                     this.getResturants();
+                    const res = await refresh();
+					if (res.token) {
+                        env.token = res.token;
+                    }
                 }catch(err){
                     const message = "会话过期，请重新登录"
                     this.$router.push('/');
-                    //env.token = ''
+                    env.token = ''
                     this.$message({
                         type: 'error',
                         message: message
@@ -376,6 +346,7 @@
                     console.log('删除备份策略失败')
                 }
             },
+/*
             async querySearchAsync(queryString, cb) {
                 if (queryString) {
                     try{
@@ -415,6 +386,7 @@
                 }
                 return isRightType && isLt2M;
             },
+*/
             async updateShop(){
                 this.dialogFormVisible = false;
                 try{

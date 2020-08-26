@@ -7,13 +7,14 @@
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>列表管理</template>
 						<el-menu-item index="policyList">备份策略列表</el-menu-item>
+						<el-menu-item index="undepolyvmList">待部署虚拟机列表</el-menu-item>
 						<el-menu-item index="vmList">被保护虚拟机列表</el-menu-item>
 						<el-menu-item index="instantvmList">即时恢复虚拟机列表</el-menu-item>
 					</el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-plus"></i>添加项目</template>
 						<el-menu-item index="addPolicy">添加备份策略</el-menu-item>
-						<el-menu-item index="addVM">添加被保护虚拟机</el-menu-item>
+						<el-menu-item index="addVM">添加待部署虚拟机</el-menu-item>
 						<el-menu-item index="addInstantVM">添加即时恢复虚拟机</el-menu-item>
 					</el-submenu>
 					<el-submenu index="4">

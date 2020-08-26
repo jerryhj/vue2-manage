@@ -139,8 +139,9 @@
 
 <script>
     import headTop from '@/components/headTop'
-    import {addPolicy, searchplace, foodCategory} from '@/api/getData'
+    import {refresh, addPolicy, foodCategory} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
+	import env from '@/config/env'
     export default {
     	data(){
     		return {
@@ -256,7 +257,7 @@
     				console.log(err);
     			}
 			},
-*/
+
     		async querySearchAsync(queryString, cb) {
     			if (queryString) {
 	    			try{
@@ -272,7 +273,8 @@
 	    				console.log(err)
 	    			}
     			}
-		    },
+			},
+*/
 		    addressSelect(address){
 		    	this.formData.latitude = address.latitude;
 		    	this.formData.longitude = address.longitude;
@@ -424,11 +426,15 @@
 				       	 			business_license_image: '',
 				       	 			catering_service_license_image: '',
 						        };
+								const res = await refresh();
+								if (res.token) {
+									env.token = res.token;
+								}
 							}else{
 								if (result.message == undefined) {
 									this.$router.push('/');
 									result.message = "会话过期，请重新登录"
-									//env.token = ''
+									env.token = ''
 								}
 								this.$message({
 					            	type: 'error',

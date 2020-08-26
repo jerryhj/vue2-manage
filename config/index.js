@@ -29,6 +29,10 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {},
     context: [ //代理路径
+       '/admin',
+       '/policy',
+        '/vm',
+        '/undepolyvm',
         '/shopping',
         '/ugc',
         '/v1',
@@ -40,7 +44,6 @@ module.exports = {
         '/promotion',
         '/eus',
         '/payapi',
-        '/admin',
         '/statis',
         '/img',
     ],

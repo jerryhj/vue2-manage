@@ -59,6 +59,7 @@
 <script>
     import headTop from '../components/headTop'
     import {getOrderList, getOrderCount, getResturantDetail, getUserInfo, getAddressById} from '@/api/getData'
+	import env from '@/config/env'
     export default {
         data(){
             return {
