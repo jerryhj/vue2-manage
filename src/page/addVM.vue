@@ -3,7 +3,7 @@
      	<head-top></head-top>
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
-	  			<header class="form_header">添加被保护虚拟机</header>
+	  			<header class="form_header">添加待部署虚拟机</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
 	  				<el-form-item label="虚拟机名称" prop="name">
 						<el-input v-model="foodForm.name"></el-input>
@@ -28,26 +28,6 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
-					<el-form-item label="备份优先级" prop="priv">
-						<el-select v-model="foodForm.priv" placeholder="请选择">
-						    <el-option
-						      	v-for="item in priv"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
-					</el-form-item>
-					<el-form-item label="备份策略" prop="policy">
-						<el-select v-model="foodForm.policy" placeholder="请选择">
-						    <el-option
-						      	v-for="item in policy"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
-					</el-form-item>
 					<el-form-item label="首次备份" prop="startTime" style="white-space: nowrap;">
 						<el-time-select
 							placeholder="执行时间"
@@ -60,7 +40,7 @@
 						</el-time-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="addFood('foodForm')">确认添加被保护虚拟机</el-button>
+						<el-button type="primary" @click="addVM('foodForm')">确认添加待部署虚拟机</el-button>
 					</el-form-item>
 	  			</el-form>
   			</el-col>
@@ -70,7 +50,7 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {refresh, getCategory, addCategory, addFood} from '@/api/getData'
+    import {refresh, getPolicyName, addCategory, addVM} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
     export default {
@@ -124,31 +104,8 @@
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
 		        },],
-    			priv: [{
-		          	value: 9,
-		          	label: '低'
-		        }, {
-		          	value: 5,
-		          	label: '中'
-		        }, {
-		          	value: 1,
-		          	label: '高'
-		        },],
-    			policy: [{
-		        },],
     			showAddCategory: false,
-    			foodSpecs: 'one',
     			dialogFormVisible: false,
-		        specsForm: {
-		          	specs: '',
-		          	packing_fee: 0,
-		          	price: 20,
-		        },
-		        specsFormrules: {
-		        	specs: [
-						{ required: true, message: '请输入规格', trigger: 'blur' },
-					],
-		        }
     		}
     	},
     	components: {
@@ -181,17 +138,36 @@
 		        })
 			}
 */
-    		this.initData();
+    		//this.initData();
     	},
+        activated(){
+            this.initData();
+        },
     	computed: {
-    		selectValue: function (){
-    			return this.categoryForm.categoryList[this.categoryForm.categorySelect]||{}
-    		}
+    		//selectValue: function (){
+    		//	return this.categoryForm.categoryList[this.categoryForm.categorySelect]||{}
+    		//}
     	},
     	methods: {
     		async initData(){
+                try{
+                    const res = await refresh();
+					if (res.token) {
+                        env.token = res.token;
+                    }
+                }catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
+                    console.log('获取数据失败', err);
+				}
+/*
     			try{
-    				const result = await getCategory();
+    				const result = await getPolicyName();
 	    			if (result.status == 1) {
 	    				result.category_list.map((item, index) => {
 	    					item.value = item.name;
@@ -204,8 +180,9 @@
 	    			}
     			}catch(err){
     				console.log(err)
-    			}
-    		},
+				}
+*/
+			},
 		    addCategoryFun(){
 		    	this.showAddCategory = !this.showAddCategory;
 		    },
@@ -250,6 +227,7 @@
 					}
 				});
 			},
+/*
 			uploadImg(res, file) {
 				if (res.status == 1) {
 					this.foodForm.image_path = res.image_path;
@@ -286,8 +264,9 @@
 		        	return 'positive-row';
 		        }
 		        return '';
-		    },
-		    addFood(foodForm){
+			},
+*/
+		    addVM(foodForm){
 		    	this.$refs[foodForm].validate(async (valid) => {
 					if (valid) {
 						const params = {
@@ -296,7 +275,7 @@
 							//restaurant_id: this.restaurant_id,
 						}
 						try{
-							const result = await addFood(params);
+							const result = await addVM(params);
 							if (result.status == 1) {
 								console.log(result)
 								this.$message({

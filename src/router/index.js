@@ -43,7 +43,7 @@ const routes = [
 		},{
 			path: '/addVM',
 			component: addVM,
-			meta: ['添加项目', '添加被保护虚拟机'],
+			meta: ['添加项目', '添加待部署虚拟机'],
 		},{
 			path: '/addInstantVM',
 			component: addInstantVM,

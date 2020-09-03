@@ -39,7 +39,7 @@
                   <template slot-scope="scope">
                     <el-button
                       size="small"
-                      @click="handleEdit(scope.row)">编辑</el-button>
+                      @click="handleEdit(scope.row)">部署</el-button>
                     <el-button
                       size="small"
                       type="danger"
@@ -62,26 +62,6 @@
                     <el-form-item label="虚拟机名称" label-width="100px">
                         <el-input v-model="selectTable.vmname" auto-complete="off"></el-input>
                     </el-form-item>
-					<el-form-item label="备份优先级" label-width="100px" prop="priv">
-						<el-select v-model="selectTable.priv" placeholder="请选择">
-						    <el-option
-						      	v-for="item in priv"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
-					</el-form-item>
-					<el-form-item label="备份策略" label-width="100px" prop="policy">
-						<el-select v-model="selectTable.policy" placeholder="请选择">
-						    <el-option
-						      	v-for="item in policy"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
-					</el-form-item>
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -96,7 +76,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getUndepolyVMs, getUndepolyVMCount, getCategory, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
+    import {refresh, getUndepolyVMs, getUndepolyVMCount, getPolicyName, updateFood, deleteVM} from '@/api/getData'
     export default {
         data(){
             return {
@@ -117,8 +97,6 @@
 		        }, {
 		          	value: 1,
 		          	label: '高'
-		        },],
-    			policy: [{
 		        },],
                 currentPage: 1,
                 selectTable: {},
@@ -141,8 +119,8 @@
             }
         },
         created(){
-        	this.restaurant_id = this.$route.query.restaurant_id;
-            this.initData();
+        	//this.restaurant_id = this.$route.query.restaurant_id;
+            //this.initData();
         },
         activated(){
         	this.restaurant_id = this.$route.query.restaurant_id;
@@ -190,9 +168,9 @@
                         });
                     console.log('获取数据失败', err);
                 }
-
+/*
     			try{
-    				const result = await getCategory();
+    				const result = await getPolicyName();
 	    			if (result.status == 1) {
 	    				result.category_list.map((item, index) => {
 	    					item.value = item.name;
@@ -205,8 +183,10 @@
 	    			}
     			}catch(err){
     				console.log(err)
-    			}
+                }
+*/
             },
+/*
             async getMenu(){
             	this.menuOptions = [];
                 try{
@@ -222,6 +202,7 @@
                     console.log('获取食品种类失败', err);
                 }
             },
+*/
             async getUndepolyVMs(){
                 const Foods = await getUndepolyVMs({offset: this.offset, limit: this.limit});
                 this.tableData = [];
@@ -266,7 +247,7 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
                 this.offset = (val - 1)*this.limit;
-                this.getFoods()
+                this.getUndepolyVMs()
             },
             expand(row, status){
             	if (status) {
@@ -282,18 +263,18 @@
                 this.dialogFormVisible = true;
             },
             async getSelectItemData(row, type){
-            	const restaurant = await getResturantDetail(row.restaurant_id);
-            	const category = await getMenuById(row.category_id)
-                this.selectTable = {...row, ...{restaurant_name: restaurant.name, restaurant_address: restaurant.address, category_name: category.name}};
+            	//const restaurant = await getResturantDetail(row.restaurant_id);
+            	//const category = await getMenuById(row.category_id)
+                this.selectTable = {...row};
 
-                this.selectMenu = {label: category.name, value: row.category_id}
+                //this.selectMenu = {label: category.name, value: row.category_id}
                 this.tableData.splice(row.index, 1, {...this.selectTable});
                 this.$nextTick(() => {
                     this.expendRow.push(row.index);
                 })
-                if (type == 'edit' && this.restaurant_id != row.restaurant_id) {
-                	this.getMenu();
-                }
+                //if (type == 'edit' && this.restaurant_id != row.restaurant_id) {
+                //	this.getMenu();
+                //}
             },
             handleSelect(index){
             	this.selectIndex = index;
@@ -301,7 +282,7 @@
             },
             async handleDelete(index, row) {
                 try{
-                    const res = await deleteFood(row.item_id);
+                    const res = await deleteVM(row.item_id);
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
@@ -349,7 +330,7 @@
                             type: 'success',
                             message: '更新食品信息成功'
                         });
-                        this.getFoods();
+                        this.getUndepolyVMs();
                     }else{
                         this.$message({
                             type: 'error',

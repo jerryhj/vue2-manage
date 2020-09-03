@@ -48,7 +48,7 @@
                   <template slot-scope="scope">
                     <el-button
                       size="small"
-                      @click="handleEdit(scope.row)">编辑</el-button>
+                      @click="handleEdit(scope.row)">恢复</el-button>
                     <el-button
                       size="small"
                       type="danger"
@@ -105,7 +105,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getFoods, getFoodsCount, getCategory, getMenu, updateFood, deleteFood, getResturantDetail, getMenuById} from '@/api/getData'
+    import {refresh, getVMs, getVMCount, getPolicyName, updateFood, deleteVM} from '@/api/getData'
     export default {
         data(){
             return {
@@ -150,8 +150,8 @@
             }
         },
         created(){
-        	this.restaurant_id = this.$route.query.restaurant_id;
-            this.initData();
+        	//this.restaurant_id = this.$route.query.restaurant_id;
+            //this.initData();
         },
         activated(){
         	this.restaurant_id = this.$route.query.restaurant_id;
@@ -178,13 +178,13 @@
         methods: {
             async initData(){
                 try{
-                    const countData = await getFoodsCount();
+                    const countData = await getVMCount();
                     if (countData.status == 1) {
                         this.count = countData.count;
                     }else{
                         throw new Error('获取数据失败');
                     }
-                    this.getFoods();
+                    this.getVMs();
                     const res = await refresh();
 					if (res.token) {
                         env.token = res.token;
@@ -201,7 +201,7 @@
                 }
 
     			try{
-    				const result = await getCategory();
+    				const result = await getPolicyName();
 	    			if (result.status == 1) {
 	    				result.category_list.map((item, index) => {
 	    					item.value = item.name;
@@ -216,6 +216,7 @@
     				console.log(err)
     			}
             },
+/*
             async getMenu(){
             	this.menuOptions = [];
                 try{
@@ -231,8 +232,9 @@
                     console.log('获取食品种类失败', err);
                 }
             },
-            async getFoods(){
-                const Foods = await getFoods({offset: this.offset, limit: this.limit});
+*/
+            async getVMs(){
+                const Foods = await getVMs({offset: this.offset, limit: this.limit});
                 this.tableData = [];
                 Foods.forEach((item, index) => {
                     const tableData = {};
@@ -278,15 +280,17 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
                 this.offset = (val - 1)*this.limit;
-                this.getFoods()
+                this.getVMs()
             },
             expand(row, status){
+/*
             	if (status) {
             		this.getSelectItemData(row)
             	}else{
                     const index = this.expendRow.indexOf(row.index);
                     this.expendRow.splice(index, 1)
                 }
+*/
             },
             handleEdit(row) {
             	this.getSelectItemData(row, 'edit')
@@ -294,18 +298,18 @@
                 this.dialogFormVisible = true;
             },
             async getSelectItemData(row, type){
-            	const restaurant = await getResturantDetail(row.restaurant_id);
-            	const category = await getMenuById(row.category_id)
-                this.selectTable = {...row, ...{restaurant_name: restaurant.name, restaurant_address: restaurant.address, category_name: category.name}};
+            	//const restaurant = await getResturantDetail(row.restaurant_id);
+            	//const category = await getMenuById(row.category_id)
+                this.selectTable = {...row};
 
-                this.selectMenu = {label: category.name, value: row.category_id}
+                //this.selectMenu = {label: category.name, value: row.category_id}
                 this.tableData.splice(row.index, 1, {...this.selectTable});
                 this.$nextTick(() => {
                     this.expendRow.push(row.index);
                 })
-                if (type == 'edit' && this.restaurant_id != row.restaurant_id) {
-                	this.getMenu();
-                }
+                //if (type == 'edit' && this.restaurant_id != row.restaurant_id) {
+                //	this.getMenu();
+                //}
             },
             handleSelect(index){
             	this.selectIndex = index;
@@ -313,7 +317,7 @@
             },
             async handleDelete(index, row) {
                 try{
-                    const res = await deleteFood(row.item_id);
+                    const res = await deleteVM(row.item_id);
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
@@ -361,7 +365,7 @@
                             type: 'success',
                             message: '更新食品信息成功'
                         });
-                        this.getFoods();
+                        this.getVMs();
                     }else{
                         this.$message({
                             type: 'error',

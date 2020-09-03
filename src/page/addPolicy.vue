@@ -139,7 +139,7 @@
 
 <script>
     import headTop from '@/components/headTop'
-    import {refresh, addPolicy, foodCategory} from '@/api/getData'
+    import {refresh, addPolicy} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
     export default {
@@ -224,12 +224,30 @@
     	components: {
     		headTop,
     	},
+        activated(){
+            this.initData();
+        },
     	//mounted(){
     	//	this.initData();
     	//},
     	methods: {
-/*
     		async initData(){
+                try{
+                    const res = await refresh();
+					if (res.token) {
+                        env.token = res.token;
+                    }
+                }catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
+                    console.log('获取数据失败', err);
+                }
+/*
     			try{
     				//this.city = await cityGuess();
     				const categories = await foodCategory();
@@ -252,12 +270,13 @@
     						this.categoryOptions.push(addnew)
 
     					}
-    				})
+					})
     			}catch(err){
     				console.log(err);
-    			}
+				}
+*/
 			},
-
+/*
     		async querySearchAsync(queryString, cb) {
     			if (queryString) {
 	    			try{
@@ -274,7 +293,6 @@
 	    			}
     			}
 			},
-*/
 		    addressSelect(address){
 		    	this.formData.latitude = address.latitude;
 		    	this.formData.longitude = address.longitude;
@@ -371,7 +389,8 @@
 		            	message: '取消输入'
 		          	});
 		        });
-		    },
+			},
+*/
 		    handleDelete(index){
 		    	this.activities.splice(index, 1)
 		    },

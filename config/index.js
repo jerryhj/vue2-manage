@@ -33,6 +33,7 @@ module.exports = {
        '/policy',
         '/vm',
         '/undepolyvm',
+        '/instantvm',
         '/shopping',
         '/ugc',
         '/v1',

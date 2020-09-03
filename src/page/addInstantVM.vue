@@ -3,9 +3,9 @@
      	<head-top></head-top>
         <el-row style="margin-top: 20px;">
   			<el-col :span="14" :offset="4">
-	  			<header class="form_header">添加被保护虚拟机</header>
+	  			<header class="form_header">添加即时恢复虚拟机</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
-	  				<el-form-item label="虚拟机名称" prop="name">
+	  				<el-form-item label="虚拟机IP地址" prop="name">
 						<el-input v-model="foodForm.name"></el-input>
 					</el-form-item>
 					<el-form-item label="虚拟机所在区域" prop="area">
@@ -18,39 +18,8 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
-					<el-form-item label="备份优先级" prop="priv">
-						<el-select v-model="foodForm.priv" placeholder="请选择">
-						    <el-option
-						      	v-for="item in priv"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
-					</el-form-item>
-					<el-form-item label="备份策略" prop="policy">
-						<el-select v-model="foodForm.policy" placeholder="请选择">
-						    <el-option
-						      	v-for="item in policy"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
-					</el-form-item>
-					<el-form-item label="首次备份" prop="startTime" style="white-space: nowrap;">
-						<el-time-select
-							placeholder="执行时间"
-							v-model="foodForm.startTime"
-							:picker-options="{
-							start: '00:00',
-							step: '00:15',
-							end: '23:45'
-							}">
-						</el-time-select>
-					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="addFood('foodForm')">确认添加被保护虚拟机</el-button>
+						<el-button type="primary" @click="addInstantVM('foodForm')">确认添加即时恢复虚拟机</el-button>
 					</el-form-item>
 	  			</el-form>
   			</el-col>
@@ -60,7 +29,7 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {refresh, getCategory, addCategory, addFood} from '@/api/getData'
+    import {refresh, getPolicyName, addInstantVM} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
     export default {
@@ -72,21 +41,14 @@
     			categoryForm: {
     				name: '',
     				area: 0x00100101,
-    				priv: 5,
-    				policy: '',
-					startTime: '',
     			},
     			foodForm: {
     				name: '',
     				area: 0x00100101,
-    				priv: 5,
-    				policy: '',
-					startTime: '',
-    				image_path: '',
     			},
     			foodrules: {
     				name: [
-						{ required: true, message: '请输入虚拟机名称', trigger: 'blur' },
+						{ required: true, message: '请输入虚拟机IP地址', trigger: 'blur' },
 					],
     				//area: [
 					//	{ required: true, message: '请选择虚拟机所在区域', trigger: 'blur' },
@@ -105,31 +67,21 @@
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
 		        },],
-    			priv: [{
-		          	value: 9,
-		          	label: '低'
-		        }, {
-		          	value: 5,
-		          	label: '中'
-		        }, {
-		          	value: 1,
-		          	label: '高'
-		        },],
-    			policy: [{
-		        },],
     			showAddCategory: false,
     			foodSpecs: 'one',
-    			dialogFormVisible: false,
+				dialogFormVisible: false,
+/*
 		        specsForm: {
 		          	specs: '',
 		          	packing_fee: 0,
 		          	price: 20,
-		        },
+				},
 		        specsFormrules: {
 		        	specs: [
 						{ required: true, message: '请输入规格', trigger: 'blur' },
 					],
-		        }
+				}
+*/
     		}
     	},
     	components: {
@@ -162,17 +114,36 @@
 		        })
 			}
 */
-    		this.initData();
+    		//this.initData();
     	},
+        activated(){
+            this.initData();
+        },
     	computed: {
-    		selectValue: function (){
-    			return this.categoryForm.categoryList[this.categoryForm.categorySelect]||{}
-    		}
+    		//selectValue: function (){
+    		//	return this.categoryForm.categoryList[this.categoryForm.categorySelect]||{}
+    		//}
     	},
     	methods: {
     		async initData(){
+                try{
+                    const res = await refresh();
+					if (res.token) {
+                        env.token = res.token;
+                    }
+                }catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
+                    console.log('获取数据失败', err);
+                }
+/*
     			try{
-    				const result = await getCategory();
+    				const result = await getPolicyName();
 	    			if (result.status == 1) {
 	    				result.category_list.map((item, index) => {
 	    					item.value = item.name;
@@ -185,31 +156,26 @@
 	    			}
     			}catch(err){
     				console.log(err)
-    			}
-    		},
+				}
+*/
+			},
 		    addCategoryFun(){
 		    	this.showAddCategory = !this.showAddCategory;
-		    },
+			},
+/*
 		    submitcategoryForm(categoryForm) {
 				this.$refs[categoryForm].validate(async (valid) => {
 					if (valid) {
 						const params = {
 							name: this.categoryForm.name,
 							area: this.categoryForm.area,
-							priv: this.categoryForm.priv,
-							policy: this.categoryForm.policy,
-							startTime: this.categoryForm.startTime,
 						}
 						try{
 							const result = await addCategory(params);
 							if (result.status == 1) {
-								this.initData();
+								//this.initData();
 								this.categoryForm.name = '';
 								this.categoryForm.area = 0x00100101;
-								this.categoryForm.priv = '中';
-								this.categoryForm.policy = '';
-								this.categoryForm.startTime = '';
-								this.categoryForm.description = '';
 								this.showAddCategory = false;
 								this.$message({
 					            	type: 'success',
@@ -255,6 +221,7 @@
 				this.specsForm.price = 20;
 				this.dialogFormVisible = false;
 			},
+*/
 			handleDelete(index){
 				this.foodForm.specs.splice(index, 1);
 			},
@@ -266,7 +233,7 @@
 		        }
 		        return '';
 		    },
-		    addFood(foodForm){
+		    addInstantVM(foodForm){
 		    	this.$refs[foodForm].validate(async (valid) => {
 					if (valid) {
 						const params = {
@@ -275,7 +242,7 @@
 							//restaurant_id: this.restaurant_id,
 						}
 						try{
-							const result = await addFood(params);
+							const result = await addInstantVM(params);
 							if (result.status == 1) {
 								console.log(result)
 								this.$message({
@@ -285,19 +252,6 @@
 					          	this.foodForm = {
 				    				name: '',
 									area: 0x00100101,
-									priv: 5,
-									policy: '',
-									startTime: '',
-				    				description: '',
-									startTime: '',
-				    				image_path: '',
-				    				activity: '',
-				    				attributes: [],
-				    				specs: [{
-				    					specs: '默认',
-							          	packing_fee: 0,
-							          	price: 20,
-				    				}],
 								}
 								const res = await refresh();
 								if (res.token) {

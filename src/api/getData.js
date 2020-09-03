@@ -104,19 +104,19 @@ export const addCategory = data => fetch('/shopping/addcategory', data, 'POST');
  * category 种类列表
  */
 
-export const foodCategory = (latitude, longitude) => fetch('/shopping/v2/restaurant/category');
+//export const foodCategory = (latitude, longitude) => fetch('/shopping/v2/restaurant/category');
 
 /**
  * 获取餐馆详细信息
  */
 
-export const getResturantDetail = restaurant_id => fetch('/shopping/' + restaurant_id);
+//export const getResturantDetail = restaurant_id => fetch('/shopping/' + restaurant_id);
 
 /**
  * 获取备份策略名称
  */
 
-export const getCategory = () => fetch('/policy/getname');
+export const getPolicyName = () => fetch('/policy/getname');
 
 /**
  * 获取备份策略数量
@@ -128,7 +128,7 @@ export const getPolicyCount = () => fetch('/policy/count');
  * 获取备份策略列表
  */
 
-export const getResturants = data => fetch('/policy', data);
+export const getPolicies = data => fetch('/policy', data);
 
 /**
  * 添加备份策略
@@ -140,7 +140,7 @@ export const addPolicy = data => fetch('/policy/add', data, 'POST');
  * 删除备份策略
  */
 
-export const deleteResturant = restaurant_id => fetch('/policy/' + restaurant_id, {}, 'DELETE');
+export const deletePolicy = restaurant_id => fetch('/policy/' + restaurant_id, {}, 'DELETE');
 
 /**
  * 更新餐馆信息
@@ -149,28 +149,34 @@ export const deleteResturant = restaurant_id => fetch('/policy/' + restaurant_id
 export const updateResturant = data => fetch('/shopping/updateshop', data, 'POST');
 
 /**
+ * 获取VM名称
+ */
+
+export const getVMName = () => fetch('/vm/getname');
+
+/**
  * 获取VM数量
  */
 
-export const getFoodsCount = () => fetch('/vm/count');
+export const getVMCount = () => fetch('/vm/count');
 
 /**
  * 获取VM列表
  */
 
-export const getFoods = data => fetch('/vm', data);
+export const getVMs = data => fetch('/vm', data);
 
 /**
  * 添加VM
  */
 
-export const addFood = data => fetch('/vm/add', data, 'POST');
+export const addVM = data => fetch('/vm/add', data, 'POST');
 
 /**
  * 删除VM
  */
 
-export const deleteFood = food_id => fetch('/vm/' + food_id, {}, 'DELETE');
+export const deleteVM = food_id => fetch('/vm/' + food_id, {}, 'DELETE');
 
 
 /**
@@ -185,24 +191,61 @@ export const getUndepolyVMs = data => fetch('/undepolyvm', data);
 
 export const getUndepolyVMCount = () => fetch('/undepolyvm/count');
 
+/**
+ * 添加UNdepolyVM
+ */
+
+export const addUndepolyVM = data => fetch('/undepolyvm/add', data, 'POST');
+
+/**
+ * 绑定VM
+ */
+
+export const bindVM = data => fetch('/instantvm/bindvm', data, 'POST');
+
+/**
+ * 获取InstantVM数量
+ */
+
+export const getInstantVMCount = () => fetch('/instantvm/count');
+
+/**
+ * 获取VM列表
+ */
+
+export const getInstantVMs = data => fetch('/instantvm', data);
+
+/**
+ * 添加VM
+ */
+
+export const addInstantVM = data => fetch('/instantvm/add', data, 'POST');
+
+/**
+ * 删除VM
+ */
+
+export const deleteInstantVM = food_id => fetch('/instantvm/' + food_id, {}, 'DELETE');
+
 
 /**
  * 获取menu列表
  */
 
-export const getMenu = data => fetch('/shopping/v2/menu', data);
+//export const getMenu = data => fetch('/shopping/v2/menu', data);
 
 /**
  * 获取menu详情
  */
 
-export const getMenuById = category_id => fetch('/shopping/v2/menu/' + category_id);
+//export const getMenuById = category_id => fetch('/shopping/v2/menu/' + category_id);
 
 /**
  * 更新食品信息
  */
 
 export const updateFood = data => fetch('/shopping/v2/updatefood', data, 'POST');
+
 
 /**
  * 获取用户列表
@@ -220,7 +263,7 @@ export const getUserCount = data => fetch('/v1/users/count', data);
  * 获取订单列表
  */
 
-export const getOrderList = data => fetch('/bos/orders', data);
+//export const getOrderList = data => fetch('/bos/orders', data);
 
 /**
  * 获取订单数量
@@ -232,13 +275,13 @@ export const getOrderCount = data => fetch('/bos/orders/count', data);
  * 获取用户信息
  */
 
-export const getUserInfo = user_id => fetch('/v1/user/' + user_id);
+//export const getUserInfo = user_id => fetch('/v1/user/' + user_id);
 
 /**
  * 获取地址信息
  */
 
-export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
+//export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
 
 /**
  * 获取用户分布信息

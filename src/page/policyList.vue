@@ -48,7 +48,7 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
-                      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                      @click="handleEdit(scope.$index, scope.row)">绑定</el-button>
                     <el-button
                       size="mini"
                       type="danger"
@@ -69,130 +69,28 @@
             <el-dialog title="修改备份策略" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
                     <el-form-item label="策略名称" label-width="100px">
-                        <el-input v-model="selectTable.name" auto-complete="off"></el-input>
+                        <el-input v-model="selectTable.name" auto-complete="off" disabled="edit"></el-input>
                     </el-form-item>
-
-					<el-form-item label="策略密码" label-width="100px">
-						<el-radio class="radio" v-model="selectTable.encrypt" label="noencrypt">不加密</el-radio>
-  						<el-radio class="radio" v-model="selectTable.encrypt" label="default_encrypt">使用缺省密码</el-radio>
-  						<el-radio class="radio" v-model="selectTable.encrypt" label="use_encrpt">设定密码</el-radio>
+					<el-form-item label="绑定的VM" label-width="100px" prop="vmname">
+						<el-select v-model="selectTable.vmname" placeholder="请选择">
+						    <el-option
+						      	v-for="item in vmname"
+						      	:key="item.value"
+						      	:label="item.label"
+						      	:value="item.value">
+						    </el-option>
+					 	</el-select>
 					</el-form-item>
-					<el-row v-if="selectTable.encrypt == 'use_encrpt'">
-						<el-form-item label="设置密码" prop="encrpt_password">
-							<el-input v-model="selectTable.encrpt_password"></el-input>
-						</el-form-item>
-					</el-row>
-					<el-form-item label="设置年备份" label-width="100px" style="white-space: nowrap;">
-						<el-switch on-text="" off-text="" v-model="selectTable.is_year"></el-switch>
+					<el-form-item label="备份优先级" label-width="100px" prop="priv">
+						<el-select v-model="selectTable.priv" placeholder="请选择">
+						    <el-option
+						      	v-for="item in priv"
+						      	:key="item.value"
+						      	:label="item.label"
+						      	:value="item.value">
+						    </el-option>
+					 	</el-select>
 					</el-form-item>
-					<el-row v-if="selectTable.is_year == true">
-						<el-form-item label="备份时间" label-width="100px" prop="year_time">
-							<el-input-number v-model="selectTable.year_time" :min="1" :max="365"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份间隔" label-width="100px" prop="year_gap">
-							<el-input-number v-model="selectTable.year_gap" :min="1" :max="12"></el-input-number>
-						</el-form-item>
-						<el-form-item label="保留备份副本数" label-width="100px" prop="year_num">
-							<el-input-number v-model="selectTable.year_num" :min="1" :max="100"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
-							<span>强制全备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.year_force_full"></el-switch>
-							<span>执行一致性备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.year_quiesce"></el-switch>
-							<span>副本实时待机</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.year_ensurance"></el-switch>
-						</el-form-item>
-					</el-row>
-					<el-form-item label="设置月备份" label-width="100px" style="white-space: nowrap;">
-						<el-switch on-text="" off-text="" v-model="selectTable.is_month"></el-switch>
-					</el-form-item>
-					<el-row v-if="selectTable.is_month == true">
-						<el-form-item label="备份时间" label-width="100px" prop="month_time">
-							<el-input-number v-model="selectTable.month_time" :min="1" :max="31"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份间隔" label-width="100px" prop="month_gap">
-							<el-input-number v-model="selectTable.month_gap" :min="1" :max="12"></el-input-number>
-						</el-form-item>
-						<el-form-item label="保留备份副本数" label-width="100px" prop="month_num">
-							<el-input-number v-model="selectTable.month_num" :min="1" :max="100"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
-							<span>强制全备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.month_force_full"></el-switch>
-							<span>执行一致性备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.month_quiesce"></el-switch>
-							<span>副本实时待机</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.month_ensurance"></el-switch>
-						</el-form-item>
-					</el-row>
-					<el-form-item label="设置周备份" label-width="100px" style="white-space: nowrap;">
-						<el-switch on-text="" off-text="" v-model="selectTable.is_week"></el-switch>
-					</el-form-item>
-					<el-row v-if="selectTable.is_week == true">
-						<el-form-item label="备份时间" label-width="100px" prop="week_time">
-							<el-input-number v-model="selectTable.week_time" :min="1" :max="7"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份间隔" label-width="100px" prop="week_gap">
-							<el-input-number v-model="selectTable.week_gap" :min="1" :max="12"></el-input-number>
-						</el-form-item>
-						<el-form-item label="保留备份副本数" label-width="100px" prop="week_num">
-							<el-input-number v-model="selectTable.week_num" :min="1" :max="100"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
-							<span>强制全备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.week_force_full"></el-switch>
-							<span>执行一致性备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.week_quiesce"></el-switch>
-							<span>副本实时待机</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.week_ensurance"></el-switch>
-						</el-form-item>
-					</el-row>
-					<el-form-item label="设置日备份" label-width="100px" style="white-space: nowrap;">
-						<el-switch on-text="" off-text="" v-model="selectTable.is_day"></el-switch>
-					</el-form-item>
-					<el-row v-if="selectTable.is_day == true">
-						<el-form-item label="备份间隔" label-width="100px" prop="day_gap">
-							<el-input-number v-model="selectTable.day_gap" :min="1" :max="12"></el-input-number>
-						</el-form-item>
-						<el-form-item label="保留备份副本数" label-width="100px" prop="day_num">
-							<el-input-number v-model="selectTable.day_num" :min="1" :max="100"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
-							<span>强制全备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.day_force_full"></el-switch>
-							<span>执行一致性备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.day_quiesce"></el-switch>
-							<span>副本实时待机</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.day_ensurance"></el-switch>
-						</el-form-item>
-					</el-row>
-					<el-form-item label="设置粒度备份" label-width="100px" style="white-space: nowrap;">
-						<el-switch on-text="" off-text="" v-model="selectTable.is_hour"></el-switch>
-					</el-form-item>
-					<el-row v-if="selectTable.is_hour == true">
-						<el-form-item label="备份间隔" label-width="100px">
-							<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
-								<el-option
-									v-for="item in options"
-									:key="item.value"
-									:label="item.label"
-									:value="item.value">
-								</el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="保留备份副本数" label-width="100px" prop="hour_num">
-							<el-input-number v-model="selectTable.hour_num" :min="1" :max="100"></el-input-number>
-						</el-form-item>
-						<el-form-item label="备份特性" label-width="100px" style="white-space: nowrap;">
-							<span>强制全备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.hour_force_full"></el-switch>
-							<span>执行一致性备份</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.hour_quiesce"></el-switch>
-							<span>副本实时待机</span>
-							<el-switch on-text="" off-text="" v-model="selectTable.hour_ensurance"></el-switch>
-						</el-form-item>
-					</el-row>
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -207,7 +105,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getResturants, getPolicyCount, foodCategory, updateResturant, deleteResturant} from '@/api/getData'
+    import {refresh, getPolicies, getPolicyCount, getVMName, updateResturant, deletePolicy} from '@/api/getData'
     export default {
         data(){
             return {
@@ -218,6 +116,18 @@
                 limit: 20,
                 count: 0,
                 tableData: [],
+    			priv: [{
+		          	value: 9,
+		          	label: '低'
+		        }, {
+		          	value: 5,
+		          	label: '中'
+		        }, {
+		          	value: 1,
+		          	label: '高'
+		        },],
+    			vmname: [{
+		        },],
                 currentPage: 1,
                 selectTable: {},
                 dialogFormVisible: false,
@@ -227,7 +137,7 @@
             }
         },
         created(){
-            this.initData();
+            //this.initData();
         },
         activated(){
             this.initData();
@@ -245,7 +155,7 @@
                     }else{
                         throw new Error('获取数据失败');
                     }
-                    this.getResturants();
+                    this.getPolicies();
                     const res = await refresh();
 					if (res.token) {
                         env.token = res.token;
@@ -260,7 +170,24 @@
                         });
                     console.log('获取数据失败', err);
                 }
+
+    			try{
+    				const result = await getVMName();
+	    			if (result.status == 1) {
+	    				result.category_list.map((item, index) => {
+	    					item.value = item.vmname;
+	    					item.label = item.vmname;
+	    				})
+						this.selectTable.vmname = result.category_list;
+						this.vmname = result.category_list;
+	    			}else{
+	    				console.log(result)
+	    			}
+    			}catch(err){
+    				console.log(err)
+                }
             },
+/*
             async getCategory(){
                 try{
                     const categories = await foodCategory();
@@ -287,9 +214,10 @@
                     console.log('获取商铺种类失败', err);
                 }
             },
-            async getResturants(){
+*/
+            async getPolicies(){
                 //const {latitude, longitude} = this.city;
-                const restaurants = await getResturants({offset: this.offset, limit: this.limit});
+                const restaurants = await getPolicies({offset: this.offset, limit: this.limit});
                 this.tableData = [];
                 restaurants.forEach(item => {
                     const tableData = {};
@@ -312,23 +240,26 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
                 this.offset = (val - 1)*this.limit;
-                this.getResturants()
+                this.getPolicies()
             },
             handleEdit(index, row) {
                 this.selectTable = row;
-                this.address.address = row.address;
+                this.selectTable.priv = '中';
+                //this.priv = '中';
                 this.dialogFormVisible = true;
-                this.selectedCategory = row.category.split('/');
-                if (!this.categoryOptions.length) {
-                    this.getCategory();
-                }
+                //this.selectedCategory = row.category.split('/');
+                //if (!this.categoryOptions.length) {
+                //    this.getCategory();
+                //}
             },
-            addFood(index, row){
+/*
+            addVM(index, row){
                 this.$router.push({ path: 'addVM', query: { restaurant_id: row.id }})
             },
+*/
             async handleDelete(index, row) {
                 try{
-                    const res = await deleteResturant(row.id);
+                    const res = await deletePolicy(row.id);
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
@@ -398,7 +329,7 @@
                             type: 'success',
                             message: '更新店铺信息成功'
                         });
-                        this.getResturants();
+                        this.getPolicies();
                     }else{
                         this.$message({
                             type: 'error',
