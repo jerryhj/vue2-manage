@@ -11,11 +11,11 @@
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="当前状态">
-                        <span>{{ props.row.status }}</span>
-                      </el-form-item>
                       <el-form-item label="所在区域">
                         <span>{{ props.row.area }}</span>
+                      </el-form-item>
+                      <el-form-item label="最近恢复的会话">
+                        <span>{{ props.row.sessnum }}</span>
                       </el-form-item>
                       <el-form-item label="最近恢复完成时间">
                         <span>{{ props.row.latest_recovery_time }}</span>
@@ -32,8 +32,8 @@
                   prop="vmname">
                 </el-table-column>
                 <el-table-column
-                  label="最近恢复的会话"
-                  prop="sessnum">
+                  label="当前状态"
+                  prop="status">
                 </el-table-column>
                 <el-table-column label="操作" width="160">
                   <template slot-scope="scope">
@@ -60,12 +60,12 @@
             <el-dialog title="绑定即时恢复虚拟机" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
                     <el-form-item label="IP地址" label-width="100px">
-                        <el-input v-model="selectTable.ipaddr" auto-complete="off" disabled="edit"></el-input>
+                        <el-input v-model="selectTable.ipaddr" auto-complete="off" disabled></el-input>
                     </el-form-item>
-					<el-form-item label="绑定的VM" label-width="100px" prop="vmname">
+					<el-form-item label="绑定的VM" label-width="100px" prop="vmnamelist">
 						<el-select v-model="selectTable.vmname" placeholder="请选择">
 						    <el-option
-						      	v-for="item in vmname"
+						      	v-for="item in vmnamelist"
 						      	:key="item.value"
 						      	:label="item.label"
 						      	:value="item.value">
@@ -98,7 +98,7 @@
                 limit: 20,
                 count: 0,
                 tableData: [],
-     			vmname: [{
+     			vmnamelist: [{
 		        },],
                currentPage: 1,
                 selectTable: {},
@@ -155,8 +155,8 @@
 	    					item.value = item.vmname;
 	    					item.label = item.vmname;
 	    				})
-						this.selectTable.vmname = result.category_list;
-						this.vmname = result.category_list;
+						this.selectTable.vmnamelist = result.category_list;
+						this.vmnamelist = result.category_list;
 	    			}else{
 	    				console.log(result)
 	    			}
@@ -291,15 +291,15 @@
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '更新食品信息成功'
+                            message: '绑定VM成功'
                         });
-                        this.getInstantVMs();
                     }else{
                         this.$message({
                             type: 'error',
                             message: res.message
                         });
                     }
+                    this.getInstantVMs();
                 }catch(err){
                     console.log('更新餐馆信息失败', err);
                 }

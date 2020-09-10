@@ -76,7 +76,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getUndepolyVMs, getUndepolyVMCount, getPolicyName, updateFood, deleteVM} from '@/api/getData'
+    import {refresh, getUndepolyVMs, getUndepolyVMCount, updateFood, deleteVM} from '@/api/getData'
     export default {
         data(){
             return {

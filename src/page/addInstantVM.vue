@@ -5,8 +5,8 @@
   			<el-col :span="14" :offset="4">
 	  			<header class="form_header">添加即时恢复虚拟机</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
-	  				<el-form-item label="虚拟机IP地址" prop="name">
-						<el-input v-model="foodForm.name"></el-input>
+	  				<el-form-item label="虚拟机IP地址" prop="vmname">
+						<el-input v-model="foodForm.vmname"></el-input>
 					</el-form-item>
 					<el-form-item label="虚拟机所在区域" prop="area">
 						<el-select v-model="foodForm.area" placeholder="请选择">
@@ -29,7 +29,7 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {refresh, getPolicyName, addInstantVM} from '@/api/getData'
+    import {refresh, addInstantVM} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
     export default {
@@ -39,15 +39,15 @@
     			baseImgPath,
     			restaurant_id: 1,
     			categoryForm: {
-    				name: '',
+    				vmname: '',
     				area: 0x00100101,
     			},
     			foodForm: {
-    				name: '',
+    				vmname: '',
     				area: 0x00100101,
     			},
     			foodrules: {
-    				name: [
+    				vmname: [
 						{ required: true, message: '请输入虚拟机IP地址', trigger: 'blur' },
 					],
     				//area: [
@@ -250,7 +250,7 @@
 					            	message: '添加成功'
 					          	});
 					          	this.foodForm = {
-				    				name: '',
+				    				vmname: '',
 									area: 0x00100101,
 								}
 								const res = await refresh();

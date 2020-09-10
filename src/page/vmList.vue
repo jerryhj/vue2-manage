@@ -81,10 +81,10 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
-					<el-form-item label="备份策略" label-width="100px" prop="policy">
+					<el-form-item label="备份策略" label-width="100px" prop="policylist">
 						<el-select v-model="selectTable.policy" placeholder="请选择">
 						    <el-option
-						      	v-for="item in policy"
+						      	v-for="item in policylist"
 						      	:key="item.value"
 						      	:label="item.label"
 						      	:value="item.value">
@@ -127,7 +127,7 @@
 		          	value: 1,
 		          	label: '高'
 		        },],
-    			policy: [{
+    			policylist: [{
 		        },],
                 currentPage: 1,
                 selectTable: {},
@@ -207,8 +207,8 @@
 	    					item.value = item.name;
 	    					item.label = item.name;
 	    				})
-						this.selectTable.policy = result.category_list;
-						this.policy = result.category_list;
+						this.selectTable.policylist = result.category_list;
+						this.policylist = result.category_list;
 	    			}else{
 	    				console.log(result)
 	    			}

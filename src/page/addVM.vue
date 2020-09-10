@@ -5,8 +5,8 @@
   			<el-col :span="14" :offset="4">
 	  			<header class="form_header">添加待部署虚拟机</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
-	  				<el-form-item label="虚拟机名称" prop="name">
-						<el-input v-model="foodForm.name"></el-input>
+	  				<el-form-item label="虚拟机名称" prop="vmname">
+						<el-input v-model="foodForm.vmname"></el-input>
 					</el-form-item>
 					<el-form-item label="虚拟机所在区域" prop="area">
 						<el-select v-model="foodForm.area" placeholder="请选择">
@@ -22,6 +22,26 @@
 						<el-select v-model="foodForm.s3area" placeholder="请选择">
 						    <el-option
 						      	v-for="item in s3area"
+						      	:key="item.value"
+						      	:label="item.label"
+						      	:value="item.value">
+						    </el-option>
+					 	</el-select>
+					</el-form-item>
+					<el-form-item label="备份优先级" prop="priv">
+						<el-select v-model="foodForm.priv" placeholder="请选择">
+						    <el-option
+						      	v-for="item in priv"
+						      	:key="item.value"
+						      	:label="item.label"
+						      	:value="item.value">
+						    </el-option>
+					 	</el-select>
+					</el-form-item>
+					<el-form-item label="备份策略" prop="policy">
+						<el-select v-model="foodForm.policy" placeholder="请选择">
+						    <el-option
+						      	v-for="item in policy"
 						      	:key="item.value"
 						      	:label="item.label"
 						      	:value="item.value">
@@ -60,7 +80,7 @@
     			baseImgPath,
     			restaurant_id: 1,
     			categoryForm: {
-    				name: '',
+    				vmname: '',
     				area: 0x00100101,
     				s3area: 0x00100101,
     				priv: 5,
@@ -68,7 +88,7 @@
 					startTime: '',
     			},
     			foodForm: {
-    				name: '',
+    				vmname: '',
     				area: 0x00100101,
     				s3area: 0x00100101,
     				priv: 5,
@@ -77,7 +97,7 @@
     				image_path: '',
     			},
     			foodrules: {
-    				name: [
+    				vmname: [
 						{ required: true, message: '请输入虚拟机名称', trigger: 'blur' },
 					],
     				//area: [
@@ -103,6 +123,18 @@
 		        }, {
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
+				},],
+  				priv: [{
+		          	value: 9,
+		          	label: '低'
+		        }, {
+		          	value: 5,
+		          	label: '中'
+		        }, {
+		          	value: 1,
+		          	label: '高'
+		        },],
+    			policy: [{
 		        },],
     			showAddCategory: false,
     			dialogFormVisible: false,
@@ -165,7 +197,7 @@
                         });
                     console.log('获取数据失败', err);
 				}
-/*
+
     			try{
     				const result = await getPolicyName();
 	    			if (result.status == 1) {
@@ -181,7 +213,6 @@
     			}catch(err){
     				console.log(err)
 				}
-*/
 			},
 		    addCategoryFun(){
 		    	this.showAddCategory = !this.showAddCategory;
@@ -190,7 +221,7 @@
 				this.$refs[categoryForm].validate(async (valid) => {
 					if (valid) {
 						const params = {
-							name: this.categoryForm.name,
+							vmname: this.categoryForm.vmname,
 							area: this.categoryForm.area,
 							s3area: this.categoryForm.s3area,
 							priv: this.categoryForm.priv,
@@ -201,7 +232,7 @@
 							const result = await addCategory(params);
 							if (result.status == 1) {
 								this.initData();
-								this.categoryForm.name = '';
+								this.categoryForm.vmname = '';
 								this.categoryForm.area = 0x00100101;
 								this.categoryForm.s3area = 0x00100101;
 								this.categoryForm.priv = '中';
@@ -283,7 +314,7 @@
 					            	message: '添加成功'
 					          	});
 					          	this.foodForm = {
-				    				name: '',
+				    				vmname: '',
 									area: 0x00100101,
 									s3area: 0x00100101,
 									priv: 5,

@@ -69,12 +69,12 @@
             <el-dialog title="修改备份策略" v-model="dialogFormVisible">
                 <el-form :model="selectTable">
                     <el-form-item label="策略名称" label-width="100px">
-                        <el-input v-model="selectTable.name" auto-complete="off" disabled="edit"></el-input>
+                        <el-input v-model="selectTable.name" auto-complete="off" disabled></el-input>
                     </el-form-item>
-					<el-form-item label="绑定的VM" label-width="100px" prop="vmname">
+					<el-form-item label="绑定的VM" label-width="100px" prop="vmnamelist">
 						<el-select v-model="selectTable.vmname" placeholder="请选择">
 						    <el-option
-						      	v-for="item in vmname"
+						      	v-for="item in vmnamelist"
 						      	:key="item.value"
 						      	:label="item.label"
 						      	:value="item.value">
@@ -94,7 +94,7 @@
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="updateShop">确 定</el-button>
+                <el-button type="primary" @click="bindVM">确 定</el-button>
               </div>
             </el-dialog>
         </div>
@@ -105,7 +105,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getPolicies, getPolicyCount, getVMName, updateResturant, deletePolicy} from '@/api/getData'
+    import {refresh, getPolicies, getPolicyCount, getVMName, assignPolicy, deletePolicy} from '@/api/getData'
     export default {
         data(){
             return {
@@ -126,7 +126,7 @@
 		          	value: 1,
 		          	label: '高'
 		        },],
-    			vmname: [{
+    			vmnamelist: [{
 		        },],
                 currentPage: 1,
                 selectTable: {},
@@ -178,8 +178,8 @@
 	    					item.value = item.vmname;
 	    					item.label = item.vmname;
 	    				})
-						this.selectTable.vmname = result.category_list;
-						this.vmname = result.category_list;
+						this.selectTable.vmnamelist = result.category_list;
+						this.vmnamelist = result.category_list;
 	    			}else{
 	    				console.log(result)
 	    			}
@@ -244,7 +244,7 @@
             },
             handleEdit(index, row) {
                 this.selectTable = row;
-                this.selectTable.priv = '中';
+                this.selectTable.priv = 5;
                 //this.priv = '中';
                 this.dialogFormVisible = true;
                 //this.selectedCategory = row.category.split('/');
@@ -318,16 +318,16 @@
                 return isRightType && isLt2M;
             },
 */
-            async updateShop(){
+            async bindVM(){
                 this.dialogFormVisible = false;
                 try{
-                    Object.assign(this.selectTable, this.address);
-                    this.selectTable.category = this.selectedCategory.join('/');
-                    const res = await updateResturant(this.selectTable)
+                    //Object.assign(this.selectTable, this.address);
+                    //this.selectTable.category = this.selectedCategory.join('/');
+                    const res = await assignPolicy(this.selectTable)
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
-                            message: '更新店铺信息成功'
+                            message: '分配备份策略成功'
                         });
                         this.getPolicies();
                     }else{
@@ -337,7 +337,7 @@
                         });
                     }
                 }catch(err){
-                    console.log('更新餐馆信息失败', err);
+                    console.log('分配备份策略失败', err);
                 }
             },
         },

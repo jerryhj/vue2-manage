@@ -113,6 +113,12 @@ export const addCategory = data => fetch('/shopping/addcategory', data, 'POST');
 //export const getResturantDetail = restaurant_id => fetch('/shopping/' + restaurant_id);
 
 /**
+ * 分配备份策略
+ */
+
+export const assignPolicy = data => fetch('/policy/assign', data, 'POST');
+
+/**
  * 获取备份策略名称
  */
 
@@ -141,12 +147,6 @@ export const addPolicy = data => fetch('/policy/add', data, 'POST');
  */
 
 export const deletePolicy = restaurant_id => fetch('/policy/' + restaurant_id, {}, 'DELETE');
-
-/**
- * 更新餐馆信息
- */
-
-export const updateResturant = data => fetch('/shopping/updateshop', data, 'POST');
 
 /**
  * 获取VM名称
