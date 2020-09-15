@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {getAdminInfo} from '@/api/getData'
+//import {getAdminInfo} from '@/api/getData'
 
 Vue.use(Vuex)
 
@@ -18,6 +18,7 @@ const mutations = {
 
 const actions = {
 	async getAdminData({commit}){
+/*
 		try{
 			const res = await getAdminInfo()
 			if (res.status == 1) {
@@ -28,6 +29,7 @@ const actions = {
 		}catch(err){
 			// console.log(err.message)
 		}
+*/
 	}
 }
 

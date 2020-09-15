@@ -26,7 +26,7 @@
 
 <script>
 	import env from '@/config/env'
-	import {login, getAdminInfo} from '@/api/getData'
+	import {login} from '@/api/getData'
 	import {mapActions, mapState} from 'vuex'
 
 	export default {
