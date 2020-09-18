@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <head-top></head-top>
-        <header class="admin_title">管理员信息</header>
+        <header class="admin_title">用户信息</header>
         <div class="admin_set">
             <ul>
                 <li>

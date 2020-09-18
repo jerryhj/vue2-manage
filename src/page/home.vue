@@ -5,15 +5,15 @@
 			<header class="section_title">数据统计</header>
 			<el-row :gutter="20" style="margin-bottom: 10px;">
                 <el-col :span="4"><div class="data_list today_head"><span class="data_num head">当日数据：</span></div></el-col>
-				<el-col :span="4"><div class="data_list"><span class="data_num">{{userCount}}</span> 新增用户</div></el-col>
-				<el-col :span="4"><div class="data_list"><span class="data_num">{{orderCount}}</span> 新增订单</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{adminCount}}</span> 新增管理员</div></el-col>
+				<el-col :span="4"><div class="data_list"><span class="data_num">{{store_size}}</span> 新增保护数据</div></el-col>
+				<el-col :span="4"><div class="data_list"><span class="data_num">{{rc_size}}</span> 当日恢复数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{remoterc_size}}</span> 当日异地恢复数据</div></el-col>
 			</el-row>
             <el-row :gutter="20">
                 <el-col :span="4"><div class="data_list all_head"><span class="data_num head">总数据：</span></div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{allUserCount}}</span> 注册用户</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{allOrderCount}}</span> 订单</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{allAdminCount}}</span> 管理员</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_store_size}}</span> 被保护数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_rc_size}}</span> 已恢复数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_remoterc_size}}</span> 异地恢复数据</div></el-col>
             </el-row>
 		</section>
 		<tendency :sevenDate='sevenDate' :sevenDay='sevenDay'></tendency>
@@ -24,16 +24,17 @@
 	import headTop from '../components/headTop'
 	import tendency from '../components/tendency' 
 	import dtime from 'time-formater'
-	import {userCount, orderCount, getUserCount, getOrderCount, adminDayCount, adminCount} from '@/api/getData'
+	import env from '@/config/env'
+	import {getAllStoreSize, getAllRecoverySize, getAllRemoteRecoverySize, getStoreSize, getRecoverySize, getRemoteRecoverySize} from '@/api/getData'
     export default {
     	data(){
     		return {
-    			userCount: null,
-    			orderCount: null,
-                adminCount: null,
-                allUserCount: null,
-                allOrderCount: null,
-                allAdminCount: null,
+    			store_size: null,
+    			rc_size: null,
+                remoterc_size: null,
+                all_store_size: null,
+                all_rc_size: null,
+                all_remoterc_size: null,
     			sevenDay: [],
     			sevenDate: [[],[],[]],
     		}
@@ -56,24 +57,31 @@
     	methods: {
     		async initData(){
     			const today = dtime().format('YYYY-MM-DD')
-    			Promise.all([userCount(today), orderCount(today), adminDayCount(today), getUserCount(), getOrderCount(), adminCount()])
+    			Promise.all([getStoreSize(today), getRecoverySize(today), getRemoteRecoverySize(today), getAllStoreSize(), getAllRecoverySize(), getAllRemoteRecoverySize()])
     			.then(res => {
-    				this.userCount = res[0].count;
-    				this.orderCount = res[1].count;
-                    this.adminCount = res[2].count;
-                    this.allUserCount = res[3].count;
-                    this.allOrderCount = res[4].count;
-                    this.allAdminCount = res[5].count;
+    				this.store_size = res[0].count;
+    				this.rc_size = res[1].count;
+                    this.remoterc_size = res[2].count;
+                    this.all_store_size = res[3].count;
+                    this.all_rc_size = res[4].count;
+                    this.all_remoterc_size = res[5].count;
     			}).catch(err => {
-    				console.log(err)
-    			})
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
+                    console.log('获取数据失败', err);
+				})
     		},
     		async getSevenData(){
     			const apiArr = [[],[],[]];
     			this.sevenDay.forEach(item => {
-    				apiArr[0].push(userCount(item))
-    				apiArr[1].push(orderCount(item))
-                    apiArr[2].push(adminDayCount(item))
+    				apiArr[0].push(getStoreSize(item))
+    				apiArr[1].push(getRecoverySize(item))
+                    apiArr[2].push(getRemoteRecoverySize(item))
     			})
     			const promiseArr = [...apiArr[0], ...apiArr[1], ...apiArr[2]]
     			Promise.all(promiseArr).then(res => {

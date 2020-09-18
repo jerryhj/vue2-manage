@@ -21,7 +21,7 @@
             initData(){
                 const option = {
                     title : {
-                        text: '被保护虚拟机',
+                        text: '任务信息',
                         subtext: '',
                         x:'center'
                     },
@@ -32,7 +32,7 @@
                     legend: {
                         orient: 'vertical',
                         left: 'left',
-                        data: ['北京','上海','深圳','杭州','其他']
+                        data: ['备份成功','备份失败','正在备份','备份数据上传中','恢复成功','恢复失败','异地恢复成功','异地恢复失败']
                     },
                     series : [
                         {
@@ -41,11 +41,14 @@
                             radius : '55%',
                             center: ['50%', '60%'],
                             data:[
-                                {value:this.pieData.beijing, name:'北京'},
-                                {value:this.pieData.shanghai, name:'上海'},
-                                {value:this.pieData.shenzhen, name:'深圳'},
-                                {value:this.pieData.hangzhou, name:'杭州'},
-                                {value:this.pieData.qita, name:'其他'}
+                                {value:this.pieData.backup_success, name:'备份成功'},
+                                {value:this.pieData.backup_failed, name:'备份失败'},
+                                {value:this.pieData.backup_doing, name:'正在备份'},
+                                {value:this.pieData.backup_upload, name:'备份数据上传中'},
+                                {value:this.pieData.recovery_success, name:'恢复成功'},
+                                {value:this.pieData.recovery_failed, name:'恢复失败'},
+                                {value:this.pieData.remote_recovery_success, name:'异地恢复成功'},
+                                {value:this.pieData.remote_recovery_failed, name:'异地恢复失败'}
                             ],
                             itemStyle: {
                                 emphasis: {

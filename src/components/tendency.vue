@@ -33,7 +33,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['新注册用户', '新增订单', '新增管理员']
+                        data:['新增保护数据', '当日恢复数据', '当日异地恢复数据']
                     },
                     toolbox: {
                         show: true,
@@ -54,7 +54,7 @@
                     yAxis: [
                         {
                           type: 'value',
-                          name: '用户',
+                          name: '数据量',
                           min: 0,
                           max: 200,
                           position: 'left',
@@ -69,7 +69,7 @@
                         },
                         {
                           type: 'value',
-                          name: '订单',
+                          name: '数据量',
                           min: 0,
                           max: 200,
                           position: 'right',
@@ -85,7 +85,7 @@
                     ],
                     series: [
                         {
-                            name:'新注册用户',
+                            name:'新增保护数据',
                             type:'line',
                             data:this.sevenDate[0],
                             yAxisIndex: 1,
@@ -97,7 +97,7 @@
                             },
                         },
                         {
-                            name:'新增订单',
+                            name:'当日恢复数据',
                             type:'line',
                             data:this.sevenDate[1],
                             yAxisIndex: 1,
@@ -109,7 +109,7 @@
                             },
                         },
                         {
-                            name:'新增管理员',
+                            name:'当日异地恢复数据',
                             type:'line',
                             data:this.sevenDate[2],
                             yAxisIndex: 1,

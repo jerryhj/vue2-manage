@@ -44,35 +44,53 @@ export const apiAllCount = () => fetch('/statis/api/count');
 export const apiAllRecord = () => fetch('/statis/api/all');
 
 /**
- * 用户注册量
+ * 获取任务信息
  */
 
-export const userCount = date => fetch('/statis/user/' + date + '/count');
+export const getJobInfo = () => fetch('/statis/jobinfo');
 
 /**
- * 某一天订单数量
+ * 获取全部存储量
  */
 
-export const orderCount = date => fetch('/statis/order/' + date + '/count');
+export const getAllStoreSize = () => fetch('/statis/all_store_size');
+
+/**
+ * 获取全部恢复数据量
+ */
+
+export const getAllRecoverySize = () => fetch('/statis/all_rc_size');
+
+/**
+ * 获取全部异地恢复数据量
+ */
+
+export const getAllRemoteRecoverySize = () => fetch('/statis/all_remoterc_size');
+
+/**
+ * 获取当日存储量
+ */
+
+export const getStoreSize = date => fetch('/statis/store_size', {query_time: date}, 'POST');
+
+/**
+ * 获取当日恢复数据量
+ */
+
+export const getRecoverySize = date => fetch('/statis/rc_size', {query_time: date}, 'POST');
 
 
 /**
- * 某一天管理员注册量
+ * 获取当日异地恢复数据量
  */
 
-export const adminDayCount = date => fetch('/statis/admin/' + date + '/count');
+export const getRemoteRecoverySize = date => fetch('/statis/remoterc_size', {query_time: date}, 'POST');
 
 /**
  * 管理员列表
  */
 
-export const adminList = data => fetch('/admin/all', data);
-
-/**
- * 管理员数量
- */
-
-export const adminCount = () => fetch('/admin/count');
+//export const adminList = data => fetch('/admin/all', data);
 
 /**
  * 获取定位城市
@@ -251,25 +269,13 @@ export const updateFood = data => fetch('/shopping/v2/updatefood', data, 'POST')
  * 获取用户列表
  */
 
-export const getUserList = data => fetch('/v1/users/list', data);
-
-/**
- * 获取用户数量
- */
-
-export const getUserCount = data => fetch('/v1/users/count', data);
+//export const getUserList = data => fetch('/v1/users/list', data);
 
 /**
  * 获取订单列表
  */
 
 //export const getOrderList = data => fetch('/bos/orders', data);
-
-/**
- * 获取订单数量
- */
-
-export const getOrderCount = data => fetch('/bos/orders/count', data);
 
 /**
  * 获取用户信息
@@ -282,9 +288,3 @@ export const getOrderCount = data => fetch('/bos/orders/count', data);
  */
 
 //export const getAddressById = address_id => fetch('/v1/addresse/' + address_id);
-
-/**
- * 获取用户分布信息
- */
-
-export const getUserCity = () => fetch('/v1/user/city/count');

@@ -8,7 +8,8 @@
 <script>
 	import headTop from '../components/headTop'
     import visitorPie from '@/components/visitorPie'
-	import {getUserCity} from '@/api/getData'
+	import env from '@/config/env'
+	import {getJobInfo} from '@/api/getData'
     export default {
     	data(){
     		return {
@@ -25,14 +26,22 @@
     	methods: {
     		async initData(){
     			try{
-    				const res = await getUserCity();
+    				const res = await getJobInfo();
     				if (res.status == 1) {
-    					this.pieData = res.user_city;
+    					this.pieData = res.jobinfo;
     				}else{
     					throw new Error(res)
     				}
     			}catch(err){
-    				console.log('获取被保护虚拟机信息失败',err);
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+                    this.$message({
+                        type: 'error',
+                        message: message
+                        });
+                    console.log('获取数据失败', err);
+    				//console.log('获取任务信息失败',err);
     			}
     		},
     	}

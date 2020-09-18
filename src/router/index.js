@@ -9,18 +9,18 @@ const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const addPolicy = r => require.ensure([], () => r(require('@/page/addPolicy')), 'addPolicy');
 const addVM = r => require.ensure([], () => r(require('@/page/addVM')), 'addVM');
 const addInstantVM = r => require.ensure([], () => r(require('@/page/addInstantVM')), 'addInstantVM');
-const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
+//const userList = r => require.ensure([], () => r(require('@/page/userList')), 'userList');
 const policyList = r => require.ensure([], () => r(require('@/page/policyList')), 'policyList');
 const undepolyvmList = r => require.ensure([], () => r(require('@/page/undepolyvmList')), 'undepolyvmList');
 const vmList = r => require.ensure([], () => r(require('@/page/vmList')), 'vmList');
 const instantvmList = r => require.ensure([], () => r(require('@/page/instantvmList')), 'instantvmList');
-const adminList = r => require.ensure([], () => r(require('@/page/adminList')), 'adminList');
+//const adminList = r => require.ensure([], () => r(require('@/page/adminList')), 'adminList');
 const visitor = r => require.ensure([], () => r(require('@/page/visitor')), 'visitor');
-const newMember = r => require.ensure([], () => r(require('@/page/newMember')), 'newMember');
-const uploadImg = r => require.ensure([], () => r(require('@/page/uploadImg')), 'uploadImg');
-const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
+//const newMember = r => require.ensure([], () => r(require('@/page/newMember')), 'newMember');
+//const uploadImg = r => require.ensure([], () => r(require('@/page/uploadImg')), 'uploadImg');
+//const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
 const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'adminSet');
-const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
+//const sendMessage = r => require.ensure([], () => r(require('@/page/sendMessage')), 'sendMessage');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
 
 const routes = [
@@ -79,12 +79,12 @@ const routes = [
 		},{
 			path: '/visitor',
 			component: visitor,
-			meta: ['图表', '被保护虚拟机'],
+			meta: ['图表', '任务信息'],
 		},{
+/*
 			path: '/newMember',
 			component: newMember,
 			meta: ['图表', '用户数据'],
-/*
 		},{
 			path: '/uploadImg',
 			component: uploadImg,
@@ -97,12 +97,14 @@ const routes = [
 */
 			path: '/adminSet',
 			component: adminSet,
-			meta: ['设置', '管理员设置'],
+			meta: ['设置', '用户设置'],
 		},{
+/*
 			path: '/sendMessage',
 			component: sendMessage,
 			meta: ['设置', '发送通知'],
 		},{
+*/
 			path: '/explain',
 			component: explain,
 			meta: ['关于', '关于'],
