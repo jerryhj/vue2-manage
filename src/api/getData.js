@@ -10,7 +10,7 @@ export const login = data => fetch('/admin/login', data, 'POST');
  * 退出
  */
 
-export const signout = () => fetch('/admin/signout');
+//export const signout = () => fetch('/admin/signout');
 
 /**
  * 刷新
@@ -22,26 +22,32 @@ export const refresh = () => fetch('/admin/refresh_token');
  * 获取用户信息
  */
 
-export const getAdminInfo = () => fetch('/admin/info');
+export const getUserInfo = () => fetch('/admin/info');
+
+/**
+ * 修改密码
+ */
+
+export const changePassword = data => fetch('/admin/change_password', data, 'POST');
 
 /**
  * api请求量
  */
 
-export const apiCount = date => fetch('/statis/api/' + date + '/count');
+//export const apiCount = date => fetch('/statis/api/' + date + '/count');
 
 /**
  * 所有api请求量
  */
 
-export const apiAllCount = () => fetch('/statis/api/count');
+//export const apiAllCount = () => fetch('/statis/api/count');
 
 
 /**
  * 所有api请求信息
  */
 
-export const apiAllRecord = () => fetch('/statis/api/all');
+//export const apiAllRecord = () => fetch('/statis/api/all');
 
 /**
  * 获取任务信息
@@ -115,7 +121,7 @@ export const searchplace = (cityid, value) => fetch('/v1/pois', {
  * 添加食品种类
  */
 
-export const addCategory = data => fetch('/shopping/addcategory', data, 'POST');
+//export const addCategory = data => fetch('/shopping/addcategory', data, 'POST');
 
 
 /**

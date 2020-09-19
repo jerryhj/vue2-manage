@@ -70,7 +70,7 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {refresh, getPolicyName, addCategory, addVM} from '@/api/getData'
+    import {refresh, getPolicyName, addVM} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
     export default {
@@ -216,7 +216,8 @@
 			},
 		    addCategoryFun(){
 		    	this.showAddCategory = !this.showAddCategory;
-		    },
+			},
+/*
 		    submitcategoryForm(categoryForm) {
 				this.$refs[categoryForm].validate(async (valid) => {
 					if (valid) {
@@ -258,7 +259,7 @@
 					}
 				});
 			},
-/*
+
 			uploadImg(res, file) {
 				if (res.status == 1) {
 					this.foodForm.image_path = res.image_path;
