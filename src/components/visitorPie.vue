@@ -21,7 +21,7 @@
             initData(){
                 const option = {
                     title : {
-                        text: '任务信息',
+                        text: '最近七日任务信息',
                         subtext: '',
                         x:'center'
                     },

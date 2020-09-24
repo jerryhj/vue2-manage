@@ -7,6 +7,7 @@
 
 <script>
 	import headTop from '../components/headTop'
+	import dtime from 'time-formater'
     import visitorPie from '@/components/visitorPie'
 	import env from '@/config/env'
 	import {getJobInfo} from '@/api/getData'
@@ -26,7 +27,8 @@
     	methods: {
     		async initData(){
     			try{
-    				const res = await getJobInfo();
+					const date = dtime(new Date().getTime() - 86400000 * 6).format('YYYY-MM-DD')
+    				const res = await getJobInfo(date);
     				if (res.status == 1) {
     					this.pieData = res.jobinfo;
     				}else{

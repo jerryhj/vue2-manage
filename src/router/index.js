@@ -4,6 +4,8 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
+const forgetpasswd = r => require.ensure([], () => r(require('@/page/forgetpasswd')), 'forgetpasswd');
+const signup = r => require.ensure([], () => r(require('@/page/signup')), 'signup');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const addPolicy = r => require.ensure([], () => r(require('@/page/addPolicy')), 'addPolicy');
@@ -27,6 +29,14 @@ const routes = [
 	{
 		path: '/',
 		component: login
+	},
+	{
+		path: '/forgetpasswd',
+		component: forgetpasswd
+	},
+	{
+		path: '/signup',
+		component: signup
 	},
 	{
 		path: '/manage',

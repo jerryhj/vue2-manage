@@ -7,6 +7,18 @@ import fetch from '@/config/fetch'
 export const login = data => fetch('/admin/login', data, 'POST');
 
 /**
+ * 注册
+ */
+
+export const signup = data => fetch('/admin/signup', data, 'POST');
+
+/**
+ * 遗忘密码
+ */
+
+export const forgetpasswd = data => fetch('/admin/forgetpasswd', data, 'POST');
+
+/**
  * 退出
  */
 
@@ -53,7 +65,7 @@ export const changePassword = data => fetch('/admin/change_password', data, 'POS
  * 获取任务信息
  */
 
-export const getJobInfo = () => fetch('/statis/jobinfo');
+export const getJobInfo = date => fetch('/statis/jobinfo', {query_time: date}, 'POST');
 
 /**
  * 获取全部存储量
