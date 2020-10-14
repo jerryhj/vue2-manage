@@ -191,6 +191,18 @@ export const deletePolicy = restaurant_id => fetch('/policy/' + restaurant_id, {
 export const getVMName = () => fetch('/vm/getname');
 
 /**
+ * 获取VM会话列表
+ */
+
+export const getVMSess = vm_id => fetch('/vm/sess/' + vm_id);
+
+/**
+ * 获取VM Install Key
+ */
+
+export const getVMInstallKey = vm_id => fetch('/vm/installkey/' + vm_id);
+
+/**
  * 获取VM数量
  */
 
@@ -203,10 +215,16 @@ export const getVMCount = () => fetch('/vm/count');
 export const getVMs = data => fetch('/vm', data);
 
 /**
- * 添加VM
+ * 部署VM
  */
 
 export const addVM = data => fetch('/vm/add', data, 'POST');
+
+/**
+ * 恢复VM
+ */
+
+export const recoveryVM = data => fetch('/vm/recovery', data, 'POST');
 
 /**
  * 删除VM
@@ -228,10 +246,17 @@ export const getUndepolyVMs = data => fetch('/undepolyvm', data);
 export const getUndepolyVMCount = () => fetch('/undepolyvm/count');
 
 /**
- * 添加UNdepolyVM
+ * 添加UndepolyVM
  */
 
 export const addUndepolyVM = data => fetch('/undepolyvm/add', data, 'POST');
+
+/**
+ * 删除UndepolyVM
+ */
+
+export const deleteUndepolyVM = food_id => fetch('/undepolyvm/' + food_id, {}, 'DELETE');
+
 
 /**
  * 绑定VM

@@ -66,35 +66,37 @@
                   :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改被保护虚拟机信息" v-model="dialogFormVisible">
-                <el-form :model="selectTable">
-                    <el-form-item label="虚拟机名称" label-width="100px">
-                        <el-input v-model="selectTable.vmname" auto-complete="off"></el-input>
+            <el-dialog title="恢复被保护虚拟机" v-model="dialogFormVisible">
+                <el-form :model="selectTable" :rules="foodrules" ref="selectTable">
+                    <el-form-item label="待恢复的VM" label-width="100px">
+                        <el-input v-model="selectTable.vmname" auto-complete="off" disabled></el-input>
                     </el-form-item>
-					<el-form-item label="备份优先级" label-width="100px" prop="priv">
-						<el-select v-model="selectTable.priv" placeholder="请选择">
+					<el-form-item label="备份时间点" label-width="100px" prop="sesslist">
+						<el-select v-model="selectTable.sessid" placeholder="请选择">
 						    <el-option
-						      	v-for="item in priv"
+						      	v-for="item in sesslist"
 						      	:key="item.value"
 						      	:label="item.label"
 						      	:value="item.value">
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
-					<el-form-item label="备份策略" label-width="100px" prop="policylist">
-						<el-select v-model="selectTable.policy" placeholder="请选择">
-						    <el-option
-						      	v-for="item in policylist"
-						      	:key="item.value"
-						      	:label="item.label"
-						      	:value="item.value">
-						    </el-option>
-					 	</el-select>
+	  				<el-form-item label="IP地址"  label-width="100px" prop="ipaddr">
+						<el-input v-model="selectTable.ipaddr"></el-input>
+					</el-form-item>
+					<el-form-item label="用户名"  label-width="100px" prop="username">
+						<el-input v-model="selectTable.username"></el-input>
+					</el-form-item>
+					<el-form-item label="密码"  label-width="100px" prop="password">
+						<el-input type="password" v-model="selectTable.password"></el-input>
+					</el-form-item>
+					<el-form-item label="异地恢复"  label-width="100px" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_remote"></el-switch>
 					</el-form-item>
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="updateFood">确 定</el-button>
+                <el-button type="primary" @click="recoveryVM('selectTable')">确 定</el-button>
               </div>
             </el-dialog>
         </div>
@@ -105,7 +107,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getVMs, getVMCount, getPolicyName, updateFood, deleteVM} from '@/api/getData'
+    import {refresh, getVMs, getVMCount, getVMSess, recoveryVM, deleteVM} from '@/api/getData'
     export default {
         data(){
             return {
@@ -127,22 +129,25 @@
 		          	value: 1,
 		          	label: '高'
 		        },],
-    			policylist: [{
+    			sesslist: [{
 		        },],
                 currentPage: 1,
-                selectTable: {},
+                selectTable: {
+                },
+                is_remote: false,
                 dialogFormVisible: false,
                 menuOptions: [],
                 selectMenu: {},
                 selectIndex: null,
-                specsForm: {
-		          	specs: '',
-		          	packing_fee: 0,
-		          	price: 20,
-		        },
-                specsFormrules: {
-		        	specs: [
-						{ required: true, message: '请输入规格', trigger: 'blur' },
+                foodrules: {
+    				ipaddr: [
+						{ required: true, message: '请输入虚拟机IP地址', trigger: 'blur' },
+					],
+    				username: [
+						{ required: true, message: '请输入用户名', trigger: 'blur' },
+					],
+    				password: [
+						{ required: true, message: '请输入密码', trigger: 'blur' },
 					],
 		        },
 		        specsFormVisible: false,
@@ -158,6 +163,7 @@
             this.initData();
         },
         computed: {
+/*
         	specs: function (){
         		let specs = [];
         		if (this.selectTable.specfoods) {
@@ -170,7 +176,8 @@
 	        		})
         		}
         		return specs
-        	}
+            }
+*/
         },
     	components: {
     		headTop,
@@ -199,22 +206,6 @@
                         });
                     console.log('获取数据失败', err);
                 }
-
-    			try{
-    				const result = await getPolicyName();
-	    			if (result.status == 1) {
-	    				result.category_list.map((item, index) => {
-	    					item.value = item.name;
-	    					item.label = item.name;
-	    				})
-						this.selectTable.policylist = result.category_list;
-						this.policylist = result.category_list;
-	    			}else{
-	    				console.log(result)
-	    			}
-    			}catch(err){
-    				console.log(err)
-    			}
             },
 /*
             async getMenu(){
@@ -263,7 +254,8 @@
 		        	return 'positive-row';
 		        }
 		        return '';
-		    },
+            },
+/*
 		    addspecs(){
 				this.specs.push({...this.specsForm});
 				this.specsForm.specs = '';
@@ -273,7 +265,8 @@
 			},
 			deleteSpecs(index){
 				this.specs.splice(index, 1);
-			},
+            },
+*/
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
@@ -292,10 +285,29 @@
                 }
 */
             },
-            handleEdit(row) {
+            async handleEdit(row) {
             	this.getSelectItemData(row, 'edit')
                 //this.selectTable = row;
                 this.dialogFormVisible = true;
+
+    			try{
+    				const result = await getVMSess(row.item_id);
+	    			if (result.status == 1) {
+	    				result.category_list.map((item, index) => {
+	    					item.value = item.id;
+	    					item.label = item.optime;
+	    				})
+						this.selectTable.sesslist = result.category_list;
+						this.sesslist = result.category_list;
+	    			}else{
+	    				console.log(result)
+	    			}
+    			}catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+    				console.log(err)
+    			}
             },
             async getSelectItemData(row, type){
             	//const restaurant = await getResturantDetail(row.restaurant_id);
@@ -323,7 +335,8 @@
                             type: 'success',
                             message: '删除被保护虚拟机成功'
                         });
-                        this.tableData.splice(index, 1);
+                        //this.tableData.splice(index, 1);
+                        this.getVMs()
                     }else{
                         throw new Error(res.message)
                     }
@@ -335,6 +348,7 @@
                     console.log('删除被保护虚拟机失败')
                 }
             },
+/*
             handleServiceAvatarScucess(res, file) {
                 if (res.status == 1) {
                     this.selectTable.image_path = res.image_path;
@@ -354,27 +368,44 @@
                 }
                 return isRightType && isLt2M;
             },
-            async updateFood(){
-                this.dialogFormVisible = false;
-                try{
-                	const subData = {new_category_id: this.selectMenu.value, specs: this.specs};
-                	const postData = {...this.selectTable, ...subData};
-                    const res = await updateFood(postData)
-                    if (res.status == 1) {
-                        this.$message({
-                            type: 'success',
-                            message: '更新食品信息成功'
-                        });
-                        this.getVMs();
-                    }else{
-                        this.$message({
-                            type: 'error',
-                            message: res.message
-                        });
-                    }
-                }catch(err){
-                    console.log('更新餐馆信息失败', err);
-                }
+*/
+            async recoveryVM(selectTable){
+		    	this.$refs[selectTable].validate(async (valid) => {
+					if (valid) {
+                        this.dialogFormVisible = false;
+						const params = {
+							...this.selectTable,
+							//category_id: this.selectValue.id,
+							//restaurant_id: this.restaurant_id,
+						}
+                        try{
+                            //const subData = {new_category_id: this.selectMenu.value, specs: this.specs};
+                            //const postData = {...this.selectTable, ...subData};
+                            const res = await recoveryVM(this.selectTable)
+                            if (res.status == 1) {
+                                this.$message({
+                                    type: 'success',
+                                    message: '恢复VM成功'
+                                });
+                                this.getVMs();
+                            }else{
+                                this.$message({
+                                    type: 'error',
+                                    message: res.message
+                                });
+                            }
+                        }catch(err){
+                            console.log('恢复VM失败', err);
+                        }
+					} else {
+						this.$notify.error({
+							title: '错误',
+							message: '请检查输入是否正确',
+							offset: 100
+						});
+						return false;
+					}
+				});
             },
         },
     }

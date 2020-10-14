@@ -57,15 +57,46 @@
                   :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改待部署虚拟机信息" v-model="dialogFormVisible">
-                <el-form :model="selectTable">
-                    <el-form-item label="虚拟机名称" label-width="100px">
-                        <el-input v-model="selectTable.vmname" auto-complete="off"></el-input>
+            <el-dialog title="部署被保护虚拟机" v-model="dialogFormVisible">
+                <el-form :model="selectTable" :rules="foodrules" ref="selectTable">
+                    <el-form-item label="待部署的VM" label-width="100px">
+                        <el-input v-model="selectTable.vmname" auto-complete="off" disabled></el-input>
                     </el-form-item>
+					<el-form-item label="获取本地部署Key" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_local"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_local == true">
+                        <el-form-item label="本地部署Key" label-width="100px">
+                            <el-input v-model="selectTable.installkey" auto-complete="off" readonly></el-input>
+                        </el-form-item>
+					</el-row>
+                    <el-form-item label="IP地址"  label-width="100px" prop="ipaddr">
+                        <el-input v-model="selectTable.ipaddr"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户名"  label-width="100px" prop="username">
+                        <el-input v-model="selectTable.username"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码"  label-width="100px" prop="password">
+                        <el-input type="password" v-model="selectTable.password"></el-input>
+                    </el-form-item>
+					<el-form-item label="设置云访问权限" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="selectTable.is_cloud"></el-switch>
+					</el-form-item>
+					<el-row v-if="selectTable.is_cloud == true">
+                        <el-form-item label="AccessKey"  label-width="100px" prop="accesskey">
+                            <el-input v-model="selectTable.accesskey"></el-input>
+                        </el-form-item>
+                        <el-form-item label="SecretKey"  label-width="100px" prop="secretkey">
+                            <el-input v-model="selectTable.secretkey"></el-input>
+                        </el-form-item>
+                        <el-form-item label="VPC ID"  label-width="100px" prop="vpcid">
+                            <el-input v-model="selectTable.vpcid"></el-input>
+                        </el-form-item>
+					</el-row>
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="updateFood">确 定</el-button>
+                <el-button type="primary" @click="addVM('selectTable')">确 定</el-button>
               </div>
             </el-dialog>
         </div>
@@ -76,7 +107,7 @@
     import headTop from '../components/headTop'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
-    import {refresh, getUndepolyVMs, getUndepolyVMCount, updateFood, deleteVM} from '@/api/getData'
+    import {refresh, getUndepolyVMs, getUndepolyVMCount, getVMInstallKey, addVM, deleteUndepolyVM} from '@/api/getData'
     export default {
         data(){
             return {
@@ -99,19 +130,23 @@
 		          	label: '高'
 		        },],
                 currentPage: 1,
-                selectTable: {},
+                selectTable: {
+                    is_local: false,
+                },
+                is_local: false,
                 dialogFormVisible: false,
                 menuOptions: [],
                 selectMenu: {},
                 selectIndex: null,
-                specsForm: {
-		          	specs: '',
-		          	packing_fee: 0,
-		          	price: 20,
-		        },
-                specsFormrules: {
-		        	specs: [
-						{ required: true, message: '请输入规格', trigger: 'blur' },
+                foodrules: {
+    				ipaddr: [
+						{ required: true, message: '请输入虚拟机IP地址', trigger: 'blur' },
+					],
+    				username: [
+						{ required: true, message: '请输入用户名', trigger: 'blur' },
+					],
+    				password: [
+						{ required: true, message: '请输入密码', trigger: 'blur' },
 					],
 		        },
 		        specsFormVisible: false,
@@ -127,6 +162,7 @@
             this.initData();
         },
         computed: {
+/*
         	specs: function (){
         		let specs = [];
         		if (this.selectTable.specfoods) {
@@ -139,7 +175,8 @@
 	        		})
         		}
         		return specs
-        	}
+            }
+*/
         },
     	components: {
     		headTop,
@@ -230,7 +267,8 @@
 		        	return 'positive-row';
 		        }
 		        return '';
-		    },
+            },
+/*
 		    addspecs(){
 				this.specs.push({...this.specsForm});
 				this.specsForm.specs = '';
@@ -240,7 +278,8 @@
 			},
 			deleteSpecs(index){
 				this.specs.splice(index, 1);
-			},
+            },
+*/
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
@@ -257,15 +296,31 @@
                     this.expendRow.splice(index, 1)
                 }
             },
-            handleEdit(row) {
+            async handleEdit(row) {
             	this.getSelectItemData(row, 'edit')
                 //this.selectTable = row;
                 this.dialogFormVisible = true;
+
+    			try{
+    				const result = await getVMInstallKey(row.item_id);
+	    			if (result.status == 1) {
+						this.selectTable.installkey = result.message;
+						this.installkey = result.message;
+	    			}else{
+	    				console.log(result)
+	    			}
+    			}catch(err){
+                    const message = "会话过期，请重新登录"
+                    this.$router.push('/');
+                    env.token = ''
+    				console.log(err)
+    			}
             },
             async getSelectItemData(row, type){
             	//const restaurant = await getResturantDetail(row.restaurant_id);
             	//const category = await getMenuById(row.category_id)
                 this.selectTable = {...row};
+                //this.selectTable.is_local = false;
 
                 //this.selectMenu = {label: category.name, value: row.category_id}
                 this.tableData.splice(row.index, 1, {...this.selectTable});
@@ -282,7 +337,7 @@
             },
             async handleDelete(index, row) {
                 try{
-                    const res = await deleteVM(row.item_id);
+                    const res = await deleteUndepolyVM(row.item_id);
                     if (res.status == 1) {
                         this.$message({
                             type: 'success',
@@ -300,6 +355,7 @@
                     console.log('删除待部署虚拟机失败')
                 }
             },
+/*
             handleServiceAvatarScucess(res, file) {
                 if (res.status == 1) {
                     this.selectTable.image_path = res.image_path;
@@ -319,27 +375,44 @@
                 }
                 return isRightType && isLt2M;
             },
-            async updateFood(){
-                this.dialogFormVisible = false;
-                try{
-                	const subData = {new_category_id: this.selectMenu.value, specs: this.specs};
-                	const postData = {...this.selectTable, ...subData};
-                    const res = await updateFood(postData)
-                    if (res.status == 1) {
-                        this.$message({
-                            type: 'success',
-                            message: '更新食品信息成功'
-                        });
-                        this.getUndepolyVMs();
-                    }else{
-                        this.$message({
-                            type: 'error',
-                            message: res.message
-                        });
-                    }
-                }catch(err){
-                    console.log('更新餐馆信息失败', err);
-                }
+*/
+            async addVM(selectTable){
+		    	this.$refs[selectTable].validate(async (valid) => {
+					if (valid) {
+                        this.dialogFormVisible = false;
+						const params = {
+							...this.selectTable,
+							//category_id: this.selectValue.id,
+							//restaurant_id: this.restaurant_id,
+						}
+                        try{
+                            //const subData = {new_category_id: this.selectMenu.value, specs: this.specs};
+                            //const postData = {...this.selectTable, ...subData};
+                            const res = await addVM(this.selectTable)
+                            if (res.status == 1) {
+                                this.$message({
+                                    type: 'success',
+                                    message: '部署VM成功'
+                                });
+                                this.getVMs();
+                            }else{
+                                this.$message({
+                                    type: 'error',
+                                    message: res.message
+                                });
+                            }
+                        }catch(err){
+                            console.log('部署VM失败', err);
+                        }
+					} else {
+						this.$notify.error({
+							title: '错误',
+							message: '请检查输入是否正确',
+							offset: 100
+						});
+						return false;
+					}
+				});
             },
         },
     }

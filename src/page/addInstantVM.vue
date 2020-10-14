@@ -5,7 +5,7 @@
   			<el-col :span="14" :offset="4">
 	  			<header class="form_header">添加即时恢复虚拟机</header>
 	  			<el-form :model="foodForm" :rules="foodrules" ref="foodForm" label-width="110px" class="form food_form">
-	  				<el-form-item label="虚拟机IP地址" prop="vmname">
+	  				<el-form-item label="虚拟机IP" prop="vmname">
 						<el-input v-model="foodForm.vmname"></el-input>
 					</el-form-item>
 					<el-form-item label="虚拟机所在区域" prop="area">
@@ -17,6 +17,12 @@
 						      	:value="item.value">
 						    </el-option>
 					 	</el-select>
+					</el-form-item>
+					<el-form-item label="用户名" prop="username">
+						<el-input v-model="foodForm.username"></el-input>
+					</el-form-item>
+					<el-form-item label="密码" prop="password">
+						<el-input type="password" v-model="foodForm.password"></el-input>
 					</el-form-item>
 					<el-form-item>
 						<el-button type="primary" @click="addInstantVM('foodForm')">确认添加即时恢复虚拟机</el-button>
@@ -45,6 +51,8 @@
     			foodForm: {
     				vmname: '',
     				area: 0x00100101,
+    				username: '',
+    				password: '',
     			},
     			foodrules: {
     				vmname: [
@@ -53,6 +61,12 @@
     				//area: [
 					//	{ required: true, message: '请选择虚拟机所在区域', trigger: 'blur' },
 					//],
+    				username: [
+						{ required: true, message: '请输入用户名', trigger: 'blur' },
+					],
+    				password: [
+						{ required: true, message: '请输入密码', trigger: 'blur' },
+					],
     			},
     			area: [{
 		          	value: 0x00100101,
@@ -252,6 +266,8 @@
 					          	this.foodForm = {
 				    				vmname: '',
 									area: 0x00100101,
+				    				username: '',
+				    				password: '',
 								}
 								const res = await refresh();
 								if (res.token) {

@@ -94,7 +94,7 @@
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="bindVM">确 定</el-button>
+                <el-button type="primary" @click="assignPolicy">确 定</el-button>
               </div>
             </el-dialog>
         </div>
@@ -318,7 +318,7 @@
                 return isRightType && isLt2M;
             },
 */
-            async bindVM(){
+            async assignPolicy(){
                 this.dialogFormVisible = false;
                 try{
                     //Object.assign(this.selectTable, this.address);

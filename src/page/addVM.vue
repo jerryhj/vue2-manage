@@ -60,7 +60,7 @@
 						</el-time-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="addVM('foodForm')">确认添加待部署虚拟机</el-button>
+						<el-button type="primary" @click="addUndepolyVM('foodForm')">确认添加待部署虚拟机</el-button>
 					</el-form-item>
 	  			</el-form>
   			</el-col>
@@ -70,7 +70,7 @@
 
 <script>
  	import headTop from '@/components/headTop'
-    import {refresh, getPolicyName, addVM} from '@/api/getData'
+    import {refresh, getPolicyName, addUndepolyVM} from '@/api/getData'
     import {baseUrl, baseImgPath} from '@/config/env'
 	import env from '@/config/env'
     export default {
@@ -298,7 +298,7 @@
 		        return '';
 			},
 */
-		    addVM(foodForm){
+		    addUndepolyVM(foodForm){
 		    	this.$refs[foodForm].validate(async (valid) => {
 					if (valid) {
 						const params = {
@@ -307,7 +307,7 @@
 							//restaurant_id: this.restaurant_id,
 						}
 						try{
-							const result = await addVM(params);
+							const result = await addUndepolyVM(params);
 							if (result.status == 1) {
 								console.log(result)
 								this.$message({

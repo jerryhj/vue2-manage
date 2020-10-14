@@ -301,7 +301,7 @@
                     }
                     this.getInstantVMs();
                 }catch(err){
-                    console.log('更新餐馆信息失败', err);
+                    console.log('绑定VM失败', err);
                 }
             },
         },
