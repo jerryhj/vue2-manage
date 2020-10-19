@@ -75,7 +75,7 @@
 						<el-select v-model="selectTable.sessid" placeholder="请选择">
 						    <el-option
 						      	v-for="item in sesslist"
-						      	:key="item.value"
+						      	:key="item.label"
 						      	:label="item.label"
 						      	:value="item.value">
 						    </el-option>
@@ -119,6 +119,58 @@
                 limit: 20,
                 count: 0,
                 tableData: [],
+  				privlist: {
+		          	9: '低',
+		          	5: '中',
+		          	1: '高',
+		        },
+     			statuslist: {
+                    0: '配置中',
+                    1: '正常',
+                    2: '异常',
+                    3: '未连接',
+                 },
+     			arealist: {
+                    0: '未知',
+                    0x00100101: '阿里云北京',
+                    0x00100201: '阿里云上海',
+                    0x00100301: '阿里云深圳',
+                    0x00100401: '阿里云杭州',
+                    0x00100501: '阿里云青岛',
+                    0x00100601: '阿里云张家口',
+                    0x00100701: '阿里云呼和浩特',
+                    0x00100801: '阿里云成都',
+                    0x00200101: '腾讯云北京',
+                    0x00200201: '腾讯云上海',
+                    0x00200301: '腾讯云广州',
+                    0x00200401: '腾讯云南京',
+                    0x00200501: '腾讯云成都',
+                    0x00200601: '腾讯云重庆',
+                    0x00300101: '华为云北京',
+                    0x00300201: '华为云上海',
+                    0x00300301: '华为云广州',
+                    0x00300401: '华为云贵阳',
+                    0x00400101: '百度云北京',
+                    0x00400201: '百度云苏州',
+                    0x00400301: '百度云广州',
+                    0x00400401: '百度云保定',
+		        },
+     			s3arealist: {
+                    0: '未知',
+                    0x00100101: '阿里云北京',
+                    0x00100201: '阿里云上海',
+                    0x00100301: '阿里云深圳',
+                    0x00100401: '阿里云杭州',
+                    0x00100501: '阿里云青岛',
+                    0x00100601: '阿里云张家口',
+                    0x00100701: '阿里云呼和浩特',
+                    0x00200101: '腾讯云北京',
+                    0x00200201: '腾讯云上海',
+                    0x00200301: '腾讯云广州',
+                    0x00200401: '腾讯云南京',
+                    0x00200501: '腾讯云成都',
+                    0x00200601: '腾讯云重庆',
+		        },
     			priv: [{
 		          	value: 9,
 		          	label: '低'
@@ -234,11 +286,11 @@
                     tableData.policy_name = item.policy_name;
                     tableData.policy = item.policy_name;
                     tableData.realsize = item.realsize;
-                    tableData.status = item.status;
+                    tableData.status = this.statuslist[item.status];
                     tableData.priority = item.priority;
-                    tableData.priv = item.priority;
-                    tableData.area = item.area;
-                    tableData.s3area = item.s3area;
+                    tableData.priv = this.privlist[item.priority];
+                    tableData.area = this.arealist[item.area];
+                    tableData.s3area = this.s3arealist[item.s3area];
                     tableData.next_time = item.next_time;
                     tableData.latest_backup_endtime = item.latest_backup_endtime;
                     tableData.image_path = item.image_path;

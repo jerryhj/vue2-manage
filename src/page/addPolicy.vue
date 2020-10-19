@@ -449,6 +449,7 @@
 								if (res.token) {
 									env.token = res.token;
 								}
+								this.$router.push('policylist')
 							}else{
 								if (result.message == undefined) {
 									this.$router.push('/');

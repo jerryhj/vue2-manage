@@ -34,7 +34,6 @@ module.exports = {
         '/vm',
         '/undepolyvm',
         '/instantvm',
-        '/shopping',
         '/statis',
     ],
     // CSS Sourcemaps off by default because relative paths are "buggy"

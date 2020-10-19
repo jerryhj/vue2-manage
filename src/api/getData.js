@@ -305,7 +305,7 @@ export const deleteInstantVM = food_id => fetch('/instantvm/' + food_id, {}, 'DE
  * 更新食品信息
  */
 
-export const updateFood = data => fetch('/shopping/v2/updatefood', data, 'POST');
+//export const updateFood = data => fetch('/shopping/v2/updatefood', data, 'POST');
 
 
 /**

@@ -5,15 +5,15 @@
 			<header class="section_title">数据统计</header>
 			<el-row :gutter="20" style="margin-bottom: 10px;">
                 <el-col :span="4"><div class="data_list today_head"><span class="data_num head">当日数据：</span></div></el-col>
-				<el-col :span="4"><div class="data_list"><span class="data_num">{{store_size}}</span> 新增保护数据</div></el-col>
-				<el-col :span="4"><div class="data_list"><span class="data_num">{{rc_size}}</span> 当日恢复数据</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{remoterc_size}}</span> 当日异地恢复数据</div></el-col>
+				<el-col :span="4"><div class="data_list"><span class="data_num">{{store_size}}GB</span> 新增保护数据</div></el-col>
+				<el-col :span="4"><div class="data_list"><span class="data_num">{{rc_size}}GB</span> 当日恢复数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{remoterc_size}}GB</span> 当日异地恢复数据</div></el-col>
 			</el-row>
             <el-row :gutter="20">
                 <el-col :span="4"><div class="data_list all_head"><span class="data_num head">总数据：</span></div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_store_size}}</span> 被保护数据</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_rc_size}}</span> 已恢复数据</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_remoterc_size}}</span> 异地恢复数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_store_size}}GB</span> 被保护数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_rc_size}}GB</span> 已恢复数据</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all_remoterc_size}}GB</span> 异地恢复数据</div></el-col>
             </el-row>
 		</section>
 		<tendency :sevenDate='sevenDate' :sevenDay='sevenDay'></tendency>
@@ -59,12 +59,12 @@
     			const today = dtime().format('YYYY-MM-DD')
     			Promise.all([getStoreSize(today), getRecoverySize(today), getRemoteRecoverySize(today), getAllStoreSize(), getAllRecoverySize(), getAllRemoteRecoverySize()])
     			.then(res => {
-    				this.store_size = res[0].count;
-    				this.rc_size = res[1].count;
-                    this.remoterc_size = res[2].count;
-                    this.all_store_size = res[3].count;
-                    this.all_rc_size = res[4].count;
-                    this.all_remoterc_size = res[5].count;
+    				this.store_size = Math.round(res[0].count / 1024 / 1024 / 1024);
+    				this.rc_size = Math.round(res[1].count / 1024 / 1024 / 1024);
+                    this.remoterc_size = Math.round(res[2].count / 1024 / 1024 / 1024);
+                    this.all_store_size = Math.round(res[3].count / 1024 / 1024 / 1024);
+                    this.all_rc_size = Math.round(res[4].count / 1024 / 1024 / 1024);
+                    this.all_remoterc_size = Math.round(res[5].count / 1024 / 1024 / 1024);
     			}).catch(err => {
                     const message = "会话过期，请重新登录"
                     this.$router.push('/');

@@ -14,8 +14,8 @@
 	  				<el-form-item label="上次充值金额" prop="recharge">
 						<el-input v-model="foodForm.recharge" disabled></el-input>
 					</el-form-item>
-					<el-form-item label="上次充值时间" prop="rechargeTime" style="white-space: nowrap;">
-						<el-input v-model="foodForm.rechargeTime" disabled></el-input>
+					<el-form-item label="上次充值时间" prop="recharge_time" style="white-space: nowrap;">
+						<el-input v-model="foodForm.recharge_time" disabled></el-input>
 					</el-form-item>
 	  				<el-form-item label="账户余额" prop="balance">
 						<el-input v-model="foodForm.balance" disabled></el-input>

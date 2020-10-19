@@ -98,9 +98,31 @@
                 limit: 20,
                 count: 0,
                 tableData: [],
+     			statuslist: {
+                    0: '配置中',
+                    1: '正常',
+                    2: '异常',
+                    3: '未连接',
+                 },
+     			s3arealist: {
+                    0: '未知',
+                    0x00100101: '阿里云北京',
+                    0x00100201: '阿里云上海',
+                    0x00100301: '阿里云深圳',
+                    0x00100401: '阿里云杭州',
+                    0x00100501: '阿里云青岛',
+                    0x00100601: '阿里云张家口',
+                    0x00100701: '阿里云呼和浩特',
+                    0x00200101: '腾讯云北京',
+                    0x00200201: '腾讯云上海',
+                    0x00200301: '腾讯云广州',
+                    0x00200401: '腾讯云南京',
+                    0x00200501: '腾讯云成都',
+                    0x00200601: '腾讯云重庆',
+		        },
      			vmnamelist: [{
 		        },],
-               currentPage: 1,
+                currentPage: 1,
                 selectTable: {},
                 dialogFormVisible: false,
                 menuOptions: [],
@@ -173,8 +195,8 @@
                     tableData.vmname = item.vmname;
                     tableData.sessnum = item.sessnum;
                     tableData.item_id = item.id;
-                    tableData.status = item.status;
-                    tableData.area = item.area;
+                    tableData.status = this.statuslist[item.status];
+                    tableData.area = this.s3arealist[item.area];
                     tableData.latest_recovery_time = item.latest_recovery_time;
                     tableData.index = index;
                     this.tableData.push(tableData);

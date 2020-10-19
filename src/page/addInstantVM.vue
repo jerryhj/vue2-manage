@@ -273,6 +273,7 @@
 								if (res.token) {
 									env.token = res.token;
 								}
+								this.$router.push('instantvmlist')
 							}else{
 								if (result.message == undefined) {
 									this.$router.push('/');
