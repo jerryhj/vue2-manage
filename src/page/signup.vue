@@ -69,12 +69,11 @@
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
 						const res = await signup({username: this.loginForm.username, email: this.loginForm.email, password: this.loginForm.password, password2: this.loginForm.password2})
-						if (res.token) {
+						if (res.status) {
 							this.$message({
 		                        type: 'success',
 		                        message: '注册成功'
 							});
-							env.token = res.token
 							this.$router.push('/')
 						}else{
 							this.$message({

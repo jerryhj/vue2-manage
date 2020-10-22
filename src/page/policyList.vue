@@ -8,12 +8,6 @@
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="策略名称">
-                        <span>{{ props.row.name }}</span>
-                      </el-form-item>
-                      <el-form-item label="是否加密">
-                        <span>{{ props.row.address }}</span>
-                      </el-form-item>
                       <el-form-item label="年备份">
                         <span>{{ props.row.year }}</span>
                       </el-form-item>
@@ -38,11 +32,11 @@
                 </el-table-column>
                 <el-table-column
                   label="是否加密"
-                  prop="address">
+                  prop="is_crypt">
                 </el-table-column>
                 <el-table-column
-                  label="策略详情"
-                  prop="description">
+                  label="使用持续数据保护特性"
+                  prop="is_cdp">
                 </el-table-column>
                 <el-table-column label="操作" width="200">
                   <template slot-scope="scope">
@@ -133,7 +127,7 @@
                 dialogFormVisible: false,
                 categoryOptions: [],
                 selectedCategory: [],
-                address: {},
+                //address: {},
             }
         },
         created(){
@@ -222,10 +216,14 @@
                 restaurants.forEach(item => {
                     const tableData = {};
                     tableData.name = item.name;
-                    tableData.address = item.address;
-                    tableData.description = item.description;
                     tableData.id = item.id;
-                    tableData.year = item.yearly_sched_id;
+                    tableData.is_cdp = (item.cdp_retain_time == 0)? 'N' : 'Y';
+                    tableData.is_crypt = (item.is_crypt == 0)? 'N' : 'Y';
+                    tableData.year = item.year;
+                    tableData.month = item.month;
+                    tableData.week = item.week;
+                    tableData.day = item.day;
+                    tableData.hour = item.hour;
                     //tableData.phone = item.phone;
                     //tableData.rating = item.rating;
                     //tableData.recent_order_num = item.recent_order_num;

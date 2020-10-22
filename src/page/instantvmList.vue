@@ -14,8 +14,11 @@
                       <el-form-item label="所在区域">
                         <span>{{ props.row.area }}</span>
                       </el-form-item>
-                      <el-form-item label="最近恢复的会话">
-                        <span>{{ props.row.sessnum }}</span>
+                      <el-form-item label="最近恢复的VM">
+                        <span>{{ props.row.latest_vmname }}</span>
+                      </el-form-item>
+                      <el-form-item label="最近恢复的会话时间">
+                        <span>{{ props.row.latest_sess }}</span>
                       </el-form-item>
                       <el-form-item label="最近恢复完成时间">
                         <span>{{ props.row.latest_recovery_time }}</span>
@@ -100,9 +103,20 @@
                 tableData: [],
      			statuslist: {
                     0: '配置中',
-                    1: '正常',
-                    2: '异常',
-                    3: '未连接',
+                    1: '配置完成',
+                    2: '开始恢复',
+                    3: '开始恢复',
+                    4: '开始恢复',
+                    5: '开始恢复',
+                    6: '开始恢复',
+                    7: '开始恢复',
+                    8: '开始恢复',
+                    9: '开始恢复',
+                    10: '恢复失败',
+                    71: '系统重启',
+                    81: '系统启动',
+                    91: '系统可用',
+                    99: '恢复完成',
                  },
      			s3arealist: {
                     0: '未知',
@@ -193,11 +207,12 @@
                     const tableData = {};
                     tableData.ipaddr = item.ipaddr;
                     tableData.vmname = item.vmname;
-                    tableData.sessnum = item.sessnum;
+                    tableData.latest_vmname = item.latest_vmname;
+                    tableData.latest_sess = item.latest_sess;
+                    tableData.latest_recovery_time = item.latest_recovery_time;
                     tableData.item_id = item.id;
                     tableData.status = this.statuslist[item.status];
                     tableData.area = this.s3arealist[item.area];
-                    tableData.latest_recovery_time = item.latest_recovery_time;
                     tableData.index = index;
                     this.tableData.push(tableData);
                 })

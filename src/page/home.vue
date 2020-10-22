@@ -59,12 +59,12 @@
     			const today = dtime().format('YYYY-MM-DD')
     			Promise.all([getStoreSize(today), getRecoverySize(today), getRemoteRecoverySize(today), getAllStoreSize(), getAllRecoverySize(), getAllRemoteRecoverySize()])
     			.then(res => {
-    				this.store_size = Math.round(res[0].count / 1024 / 1024 / 1024);
-    				this.rc_size = Math.round(res[1].count / 1024 / 1024 / 1024);
-                    this.remoterc_size = Math.round(res[2].count / 1024 / 1024 / 1024);
-                    this.all_store_size = Math.round(res[3].count / 1024 / 1024 / 1024);
-                    this.all_rc_size = Math.round(res[4].count / 1024 / 1024 / 1024);
-                    this.all_remoterc_size = Math.round(res[5].count / 1024 / 1024 / 1024);
+    				this.store_size = Math.round(res[0].count * 100 / 1024 / 1024 / 1024) / 100;
+    				this.rc_size = Math.round(res[1].count * 100 / 1024 / 1024 / 1024) / 100;
+                    this.remoterc_size = Math.round(res[2].count * 100 / 1024 / 1024 / 1024) / 100;
+                    this.all_store_size = Math.round(res[3].count * 100 / 1024 / 1024 / 1024) / 100;
+                    this.all_rc_size = Math.round(res[4].count * 100 / 1024 / 1024 / 1024) / 100;
+                    this.all_remoterc_size = Math.round(res[5].count * 100 / 1024 / 1024 / 1024) / 100;
     			}).catch(err => {
                     const message = "会话过期，请重新登录"
                     this.$router.push('/');
