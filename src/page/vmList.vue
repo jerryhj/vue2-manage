@@ -15,13 +15,13 @@
                         <span>{{ props.row.status }}</span>
                       </el-form-item>
                       <el-form-item label="备份优先级">
-                        <span>{{ props.row.priv }}</span>
+                        <span>{{ props.row._priv }}</span>
                       </el-form-item>
                       <el-form-item label="所在区域">
-                        <span>{{ props.row.area }}</span>
+                        <span>{{ props.row._area }}</span>
                       </el-form-item>
                       <el-form-item label="备份至">
-                        <span>{{ props.row.s3area }}</span>
+                        <span>{{ props.row._s3area }}</span>
                       </el-form-item>
                       <el-form-item label="下次备份时间">
                         <span>{{ props.row.next_time }}</span>
@@ -285,12 +285,12 @@
                     tableData.item_id = item.id;
                     tableData.policy_name = item.policy_name;
                     tableData.policy = item.policy_name;
-                    tableData.realsize = item.realsize;
+                    tableData.realsize = Math.round(item.realsize * 100 / 1024 / 1024 / 1024) / 100 + 'GB';
                     tableData.status = this.statuslist[item.status];
                     tableData.priority = item.priority;
-                    tableData.priv = this.privlist[item.priority];
-                    tableData.area = this.arealist[item.area];
-                    tableData.s3area = this.s3arealist[item.s3area];
+                    tableData._priv = this.privlist[item.priority];
+                    tableData._area = this.arealist[item.area];
+                    tableData._s3area = this.s3arealist[item.s3area];
                     tableData.next_time = item.next_time;
                     tableData.latest_backup_endtime = item.latest_backup_endtime;
                     tableData.image_path = item.image_path;
@@ -440,6 +440,7 @@
                                     message: '恢复VM成功'
                                 });
                                 this.getVMs();
+								//this.$router.push('instantvmlist')
                             }else{
                                 this.$message({
                                     type: 'error',
