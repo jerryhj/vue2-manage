@@ -75,6 +75,9 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
+                    <el-form-item label="会话密码" label-width="100px" prop="sess_password">
+                        <el-input v-model="selectTable.sess_password"></el-input>
+                    </el-form-item>
                 </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>

@@ -81,13 +81,16 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
+                    <el-form-item label="会话密码" label-width="100px" prop="sess_password">
+                        <el-input v-model="selectTable.sess_password"></el-input>
+                    </el-form-item>
 	  				<el-form-item label="IP地址"  label-width="100px" prop="ipaddr">
 						<el-input v-model="selectTable.ipaddr"></el-input>
 					</el-form-item>
 					<el-form-item label="用户名"  label-width="100px" prop="username">
 						<el-input v-model="selectTable.username"></el-input>
 					</el-form-item>
-					<el-form-item label="密码"  label-width="100px" prop="password">
+					<el-form-item label="用户密码"  label-width="100px" prop="password">
 						<el-input type="password" v-model="selectTable.password"></el-input>
 					</el-form-item>
 					<el-form-item label="异地恢复"  label-width="100px" style="white-space: nowrap;">
@@ -192,6 +195,9 @@
                 selectMenu: {},
                 selectIndex: null,
                 foodrules: {
+                    sesslist: [
+						{ required: true, message: '请选择备份时间点', trigger: 'blur' },
+					],
     				ipaddr: [
 						{ required: true, message: '请输入虚拟机IP地址', trigger: 'blur' },
 					],

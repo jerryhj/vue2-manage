@@ -17,6 +17,21 @@
 							<el-input v-model="formData.encrpt_password"></el-input>
 						</el-form-item>
 					</el-row>
+					<el-form-item label="设置持续数据保护" style="white-space: nowrap;">
+						<el-switch on-text="" off-text="" v-model="formData.is_cdp"></el-switch>
+					</el-form-item>
+					<el-row v-if="formData.is_cdp == true">
+						<el-form-item label="持续数据保护时长" prop="cdp_retain_time">
+							<el-select v-model="activityValue" @change="selectActivity" :placeholder="activityValue">
+								<el-option
+									v-for="item in cdp_options"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value">
+								</el-option>
+							</el-select>
+						</el-form-item>
+					</el-row>
 					<el-form-item label="设置年备份" style="white-space: nowrap;">
 						<el-switch on-text="" off-text="" v-model="formData.is_year"></el-switch>
 					</el-form-item>
@@ -148,7 +163,7 @@
     			city: {},
     			formData: {
 					name: '', //策略名称
-					encrypt: 'noencrypt',
+					encrypt: 'default_encrypt',
 					encrpt_password: '',
 					year_time: 1,
 					month_time: 1,
@@ -214,6 +229,31 @@
 		        }, {
 		          	value: '144',
 		          	label: '12小时'
+		        }],
+				cdp_options: [{
+		          	value: '1',
+		          	label: '5分钟'
+		        }, {
+		          	value: '12',
+		          	label: '1小时'
+		        }, {
+		          	value: '72',
+		          	label: '6小时'
+		        }, {
+		          	value: '144',
+		          	label: '12小时'
+		        }, {
+		          	value: '288',
+		          	label: '1日'
+		        }, {
+		          	value: '864',
+		          	label: '3日'
+		        }, {
+		          	value: '2016',
+		          	label: '7日'
+		        }, {
+		          	value: '8640',
+		          	label: '30日'
 		        }],
        	 		activityValue: '15分钟',
 			    baseUrl,
@@ -406,7 +446,7 @@
 					          	});
 					          	this.formData = {
 									name: '', //店铺名称
-									encrypt: '',
+									encrypt: 'default_encrypt',
 									encrpt_password: '',
 									year_time: 1,
 									month_time: 1,
