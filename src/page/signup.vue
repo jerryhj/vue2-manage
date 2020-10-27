@@ -12,12 +12,6 @@
 					<el-form-item prop="email">
 						<el-input v-model="loginForm.email" placeholder="邮箱地址"><span>dsfsf</span></el-input>
 					</el-form-item>
-					<el-form-item prop="password">
-						<el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
-					</el-form-item>
-					<el-form-item prop="password2">
-						<el-input type="password" placeholder="再次输入密码" v-model="loginForm.password2"></el-input>
-					</el-form-item>
 					<el-form-item>
                         <el-button @click="cancel">取 消</el-button>
 		                <el-button type="primary" @click="submitForm('loginForm')">注 册</el-button>
@@ -39,8 +33,6 @@
 				loginForm: {
 					username: '',
 					email: '',
-					password: '',
-					password2: '',
 				},
 				rules: {
 					username: [
@@ -49,12 +41,6 @@
 					email: [
 			            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
 			        ],
-					password: [
-						{ required: true, message: '请输入密码', trigger: 'blur' }
-					],
-					password2: [
-						{ required: true, message: '请输入密码', trigger: 'blur' }
-					],
 				},
 				showLogin: false,
 			}
@@ -68,11 +54,11 @@
 			async submitForm(formName) {
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
-						const res = await signup({username: this.loginForm.username, email: this.loginForm.email, password: this.loginForm.password, password2: this.loginForm.password2})
+						const res = await signup({username: this.loginForm.username, email: this.loginForm.email})
 						if (res.status) {
 							this.$message({
 		                        type: 'success',
-		                        message: '注册成功'
+		                        message: '注册成功，请检查邮箱获取密码'
 							});
 							this.$router.push('/')
 						}else{
@@ -115,8 +101,8 @@
 		}
 	}
 	.form_contianer{
-		.wh(480px, 260px);
-		.ctp(480px, 260px);
+		.wh(480px, 160px);
+		.ctp(480px, 160px);
 		padding: 25px;
 		border-radius: 5px;
 		text-align: right;

@@ -12,10 +12,10 @@
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                       <el-form-item label="所在区域">
-                        <span>{{ props.row.area }}</span>
+                        <span>{{ props.row._area }}</span>
                       </el-form-item>
                       <el-form-item label="备份至">
-                        <span>{{ props.row.s3area }}</span>
+                        <span>{{ props.row._s3area }}</span>
                       </el-form-item>
                       <el-form-item label="首次备份时间">
                         <span>{{ props.row.next_time }}</span>
@@ -33,7 +33,7 @@
                 </el-table-column>
                 <el-table-column
                   label="备份优先级"
-                  prop="priv">
+                  prop="_priv">
                 </el-table-column>
                 <el-table-column label="操作" width="160">
                   <template slot-scope="scope">
@@ -165,7 +165,7 @@
                     0x00200501: '腾讯云成都',
                     0x00200601: '腾讯云重庆',
 		        },
-    			priv: [{
+    			_priv: [{
 		          	value: 9,
 		          	label: '低'
 		        }, {
@@ -296,9 +296,9 @@
                     tableData.policy_name = item.policy_name;
                     tableData.policy = item.policy_name;
                     tableData.priority = item.priority;
-                    tableData.priv = this.privlist[item.priority];
-                    tableData.area = this.arealist[item.area];
-                    tableData.s3area = this.s3arealist[item.s3area];
+                    tableData._priv = this.privlist[item.priority];
+                    tableData._area = this.arealist[item.area];
+                    tableData._s3area = this.s3arealist[item.s3area];
                     tableData.next_time = item.next_time;
                     tableData.image_path = item.image_path;
                     tableData.specfoods = item.specfoods;
@@ -434,14 +434,15 @@
                         try{
                             //const subData = {new_category_id: this.selectMenu.value, specs: this.specs};
                             //const postData = {...this.selectTable, ...subData};
-                            const res = await addVM(this.selectTable)
+                            const postData = {...this.selectTable};
+                            const res = await addVM(postData)
                             if (res.status == 1) {
                                 this.$message({
                                     type: 'success',
-                                    message: '部署VM成功'
+                                    message: '开始部署'
                                 });
                                 //this.getVMs();
-								this.$router.push('vmlist')
+								//this.$router.push('vmlist')
                             }else{
                                 this.$message({
                                     type: 'error',

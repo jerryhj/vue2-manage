@@ -10,11 +10,11 @@
 					<el-form-item label="策略密码">
 						<el-radio class="radio" v-model="formData.encrypt" label="noencrypt">不加密</el-radio>
   						<el-radio class="radio" v-model="formData.encrypt" label="default_encrypt">使用缺省密码</el-radio>
-  						<el-radio class="radio" v-model="formData.encrypt" label="use_encrpt">设定密码</el-radio>
+  						<el-radio class="radio" v-model="formData.encrypt" label="use_encrypt">设定密码</el-radio>
 					</el-form-item>
-					<el-row v-if="formData.encrypt == 'use_encrpt'">
-						<el-form-item label="设置密码" prop="encrpt_password">
-							<el-input v-model="formData.encrpt_password"></el-input>
+					<el-row v-if="formData.encrypt == 'use_encrypt'">
+						<el-form-item label="设置密码" prop="encrypt_password">
+							<el-input v-model="formData.encrypt_password"></el-input>
 						</el-form-item>
 					</el-row>
 					<el-form-item label="设置持续数据保护" style="white-space: nowrap;">
@@ -164,7 +164,7 @@
     			formData: {
 					name: '', //策略名称
 					encrypt: 'default_encrypt',
-					encrpt_password: '',
+					encrypt_password: '',
 					year_time: 1,
 					month_time: 1,
 					day_time: 1,
@@ -447,7 +447,7 @@
 					          	this.formData = {
 									name: '', //店铺名称
 									encrypt: 'default_encrypt',
-									encrpt_password: '',
+									encrypt_password: '',
 									year_time: 1,
 									month_time: 1,
 									day_time: 1,

@@ -76,7 +76,7 @@
 						}else{
 							this.$message({
 		                        type: 'error',
-		                        message: res.message
+		                        message: '登录失败'
 		                    });
 						}
 					} else {

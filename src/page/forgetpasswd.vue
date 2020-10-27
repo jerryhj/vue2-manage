@@ -48,7 +48,7 @@
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
 						const res = await forgetpasswd({email: this.loginForm.email})
-						if (res.token) {
+						if (res.status) {
 							this.$message({
 		                        type: 'success',
 		                        message: '请检查邮箱获取新密码'
