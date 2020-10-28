@@ -336,7 +336,7 @@
 								if (res.token) {
 									env.token = res.token;
 								}
-								this.$router.push('undeplyvmlist')
+								this.$router.push('undepolyvmList')
 							}else{
 								if (result.message == undefined) {
 									this.$router.push('/');

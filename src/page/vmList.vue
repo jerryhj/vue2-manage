@@ -195,7 +195,7 @@
                 selectMenu: {},
                 selectIndex: null,
                 foodrules: {
-                    sesslist: [
+                    sessid: [
 						{ required: true, message: '请选择备份时间点', trigger: 'blur' },
 					],
     				ipaddr: [
