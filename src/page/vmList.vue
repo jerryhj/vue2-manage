@@ -195,9 +195,6 @@
                 selectMenu: {},
                 selectIndex: null,
                 foodrules: {
-                    sessid: [
-						{ required: true, message: '请选择备份时间点', trigger: 'blur' },
-					],
     				ipaddr: [
 						{ required: true, message: '请输入虚拟机IP地址', trigger: 'blur' },
 					],
@@ -443,7 +440,7 @@
                             if (res.status == 1) {
                                 this.$message({
                                     type: 'success',
-                                    message: '恢复VM成功'
+                                    message: '即时恢复开始'
                                 });
                                 this.getVMs();
 								//this.$router.push('instantvmlist')

@@ -18,7 +18,7 @@
                         <span>{{ props.row._s3area }}</span>
                       </el-form-item>
                       <el-form-item label="首次备份时间">
-                        <span>{{ props.row.next_time }}</span>
+                        <span>{{ props.row.trigger_time }}</span>
                       </el-form-item>
                     </el-form>
                   </template>
@@ -299,7 +299,7 @@
                     tableData._priv = this.privlist[item.priority];
                     tableData._area = this.arealist[item.area];
                     tableData._s3area = this.s3arealist[item.s3area];
-                    tableData.next_time = item.next_time;
+                    tableData.trigger_time = item.trigger_time;
                     tableData.image_path = item.image_path;
                     tableData.specfoods = item.specfoods;
                     tableData.index = index;

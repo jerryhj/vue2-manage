@@ -48,10 +48,10 @@
 						    </el-option>
 					 	</el-select>
 					</el-form-item>
-					<el-form-item label="首次备份" prop="startTime" style="white-space: nowrap;">
+					<el-form-item label="首次备份" prop="start_time" style="white-space: nowrap;">
 						<el-time-select
 							placeholder="执行时间"
-							v-model="foodForm.startTime"
+							v-model="foodForm.start_time"
 							:picker-options="{
 							start: '00:00',
 							step: '00:15',
@@ -85,7 +85,7 @@
     				s3area: 0x00100101,
     				priv: 5,
     				policy: '',
-					startTime: '',
+					start_time: '',
     			},
     			foodForm: {
     				vmname: '',
@@ -93,7 +93,7 @@
     				s3area: 0x00100101,
     				priv: 5,
     				policy: '',
-					startTime: '',
+					start_time: '',
     				image_path: '',
     			},
     			foodrules: {
@@ -320,9 +320,8 @@
 									s3area: 0x00100101,
 									priv: 5,
 									policy: '',
-									startTime: '',
+									start_time: '',
 				    				description: '',
-									startTime: '',
 				    				image_path: '',
 				    				activity: '',
 				    				attributes: [],
