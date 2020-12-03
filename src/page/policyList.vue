@@ -217,7 +217,7 @@
                     const tableData = {};
                     tableData.name = item.name;
                     tableData.id = item.id;
-                    tableData.is_cdp = (item.cdp_retain_time == 0)? 'N' : 'Y';
+                    tableData.is_cdp = (item.cdp_retain_time == -1)? 'N' : 'Y';
                     tableData.is_crypt = (item.is_crypt == 0)? 'N' : 'Y';
                     tableData.year = item.year;
                     tableData.month = item.month;
