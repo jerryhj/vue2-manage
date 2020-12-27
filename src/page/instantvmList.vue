@@ -12,7 +12,7 @@
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                       <el-form-item label="所在区域">
-                        <span>{{ props.row.area }}</span>
+                        <span>{{ props.row._area }}</span>
                       </el-form-item>
                       <el-form-item label="最近恢复的VM">
                         <span>{{ props.row.latest_vmname }}</span>
@@ -36,7 +36,7 @@
                 </el-table-column>
                 <el-table-column
                   label="当前状态"
-                  prop="status">
+                  prop="_status">
                 </el-table-column>
                 <el-table-column label="操作" width="160">
                   <template slot-scope="scope">
@@ -76,7 +76,7 @@
 					 	</el-select>
 					</el-form-item>
                     <el-form-item label="会话密码" label-width="100px" prop="sess_password">
-                        <el-input v-model="selectTable.sess_password"></el-input>
+                        <el-input type="password" v-model="selectTable.sess_password"></el-input>
                     </el-form-item>
                 </el-form>
               <div slot="footer" class="dialog-footer">
@@ -214,8 +214,8 @@
                     tableData.latest_sess = item.latest_sess;
                     tableData.latest_recovery_time = item.latest_recovery_time;
                     tableData.item_id = item.id;
-                    tableData.status = this.statuslist[item.status];
-                    tableData.area = this.s3arealist[item.area];
+                    tableData._status = this.statuslist[item.status];
+                    tableData._area = this.s3arealist[item.area];
                     tableData.index = index;
                     this.tableData.push(tableData);
                 })
