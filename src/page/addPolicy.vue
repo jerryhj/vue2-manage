@@ -14,7 +14,7 @@
 					</el-form-item>
 					<el-row v-if="formData.encrypt == 'use_encrypt'">
 						<el-form-item label="设置密码" prop="encrypt_password">
-							<el-input v-model="formData.encrypt_password"></el-input>
+							<el-input type="password" v-model="formData.encrypt_password"></el-input>
 						</el-form-item>
 					</el-row>
 					<el-form-item label="设置持续数据保护" style="white-space: nowrap;">
