@@ -234,6 +234,9 @@
 		          	value: '1',
 		          	label: '5分钟'
 		        }, {
+		          	value: '3',
+		          	label: '15分钟'
+		        }, {
 		          	value: '12',
 		          	label: '1小时'
 		        }, {
