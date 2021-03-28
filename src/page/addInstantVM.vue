@@ -80,6 +80,15 @@
 		        }, {
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
+		        }, {
+		          	value: 0x00500101,
+		          	label: 'UCloud北京'
+		        }, {
+		          	value: 0x00500201,
+		          	label: 'UCloud上海'
+		        }, {
+		          	value: 0x00500301,
+		          	label: 'UCloud广州'
 		        },],
     			showAddCategory: false,
     			foodSpecs: 'one',

@@ -116,6 +116,42 @@
 		        }, {
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
+		        }, {
+		          	value: 0x00500101,
+		          	label: 'UCloud北京'
+		        }, {
+		          	value: 0x00500201,
+		          	label: 'UCloud上海'
+		        }, {
+		          	value: 0x00500301,
+		          	label: 'UCloud广州'
+		        }, {
+		          	value: 0x00000101,
+		          	label: '本地1'
+		        }, {
+		          	value: 0x00000201,
+		          	label: '本地2'
+		        }, {
+		          	value: 0x00000301,
+		          	label: '本地3'
+		        }, {
+		          	value: 0x00000401,
+		          	label: '本地4'
+		        }, {
+		          	value: 0x00000501,
+		          	label: '本地5'
+		        }, {
+		          	value: 0x00000601,
+		          	label: '本地6'
+		        }, {
+		          	value: 0x00000701,
+		          	label: '本地7'
+		        }, {
+		          	value: 0x00000801,
+		          	label: '本地8'
+		        }, {
+		          	value: 0x00000901,
+		          	label: '本地9'
 		        },],
     			s3area: [{
 		          	value: 0x00100101,
@@ -129,6 +165,15 @@
 		        }, {
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
+		        }, {
+		          	value: 0x00500101,
+		          	label: 'UCloud北京'
+		        }, {
+		          	value: 0x00500201,
+		          	label: 'UCloud上海'
+		        }, {
+		          	value: 0x00500301,
+		          	label: 'UCloud广州'
 				},],
   				priv: [{
 		          	value: 9,
