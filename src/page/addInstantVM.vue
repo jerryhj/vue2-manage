@@ -108,6 +108,30 @@
 		          	value: 0x00200601,
 		          	label: '腾讯云重庆'
 		        }, {
+		          	value: 0x00300101,
+		          	label: '华为云北京'
+		        }, {
+		          	value: 0x00300201,
+		          	label: '华为云上海'
+		        }, {
+		          	value: 0x00300301,
+		          	label: '华为云广州'
+		        }, {
+		          	value: 0x00300401,
+		          	label: '华为云贵阳'
+		        }, {
+		          	value: 0x00400101,
+		          	label: '百度云北京'
+		        }, {
+		          	value: 0x00400201,
+		          	label: '百度云苏州'
+		        }, {
+		          	value: 0x00400301,
+		          	label: '百度云广州'
+		        }, {
+		          	value: 0x00400401,
+		          	label: '百度云保定'
+		        }, {
 		          	value: 0x00500101,
 		          	label: 'UCloud北京'
 		        }, {
