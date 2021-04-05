@@ -75,11 +75,38 @@
 		          	value: 0x00100201,
 		          	label: '阿里云上海'
 		        }, {
+		          	value: 0x00100301,
+		          	label: '阿里云深圳'
+		        }, {
+		          	value: 0x00100401,
+		          	label: '阿里云杭州'
+		        }, {
+		          	value: 0x00100501,
+		          	label: '阿里云青岛'
+		        }, {
+		          	value: 0x00100601,
+		          	label: '阿里云张家口'
+		        }, {
+		          	value: 0x00100701,
+		          	label: '阿里云呼和浩特'
+		        }, {
 		          	value: 0x00200101,
 		          	label: '腾讯云北京'
 		        }, {
 		          	value: 0x00200201,
 		          	label: '腾讯云上海'
+		        }, {
+		          	value: 0x00200301,
+		          	label: '腾讯云广州'
+		        }, {
+		          	value: 0x00200401,
+		          	label: '腾讯云南京'
+		        }, {
+		          	value: 0x00200501,
+		          	label: '腾讯云成都'
+		        }, {
+		          	value: 0x00200601,
+		          	label: '腾讯云重庆'
 		        }, {
 		          	value: 0x00500101,
 		          	label: 'UCloud北京'
@@ -89,6 +116,27 @@
 		        }, {
 		          	value: 0x00500301,
 		          	label: 'UCloud广州'
+		        }, {
+		          	value: 0x00600101,
+		          	label: 'KSCloud北京'
+		        }, {
+		          	value: 0x00600201,
+		          	label: 'KSCloud上海'
+		        }, {
+		          	value: 0x00600301,
+		          	label: 'KSCloud广州'
+		        }, {
+		          	value: 0x00700101,
+		          	label: '天翼云贵州'
+		        }, {
+		          	value: 0x00800101,
+		          	label: '移动云北京'
+		        }, {
+		          	value: 0x10100101,
+		          	label: 'AWS北京'
+		        }, {
+		          	value: 0x10100201,
+		          	label: 'AWS宁夏'
 		        },],
     			showAddCategory: false,
     			foodSpecs: 'one',
