@@ -19,6 +19,18 @@ export const signup = data => fetch('/admin/signup', data, 'POST');
 export const forgetpasswd = data => fetch('/admin/forgetpasswd', data, 'POST');
 
 /**
+ * 获取S3数量
+ */
+
+ export const getS3Count = () => fetch('/admin/gets3count');
+
+/**
+ * 添加S3对象存储
+ */
+
+ export const addS3 = data => fetch('/admin/adds3', data, 'POST');
+
+/**
  * 退出
  */
 

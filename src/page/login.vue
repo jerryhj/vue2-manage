@@ -28,7 +28,7 @@
 
 <script>
 	import env from '@/config/env'
-	import {login} from '@/api/getData'
+	import {login, getS3Count} from '@/api/getData'
 	import {mapActions, mapState} from 'vuex'
 
 	export default {
@@ -67,12 +67,17 @@
 					if (valid) {
 						const res = await login({username: this.loginForm.username, password: this.loginForm.password})
 						if (res.token) {
-							this.$message({
-		                        type: 'success',
-		                        message: '登录成功'
-							});
 							env.token = res.token
-							this.$router.push('manage')
+							const countData = await getS3Count();
+							if (countData.count > 0) {
+								this.$message({
+									type: 'success',
+									message: '登录成功'
+								});
+								this.$router.push('manage')
+							}else{
+								this.$router.push('addS3')
+							}
 						}else{
 							this.$message({
 		                        type: 'error',

@@ -6,6 +6,7 @@ Vue.use(Router)
 const login = r => require.ensure([], () => r(require('@/page/login')), 'login');
 const forgetpasswd = r => require.ensure([], () => r(require('@/page/forgetpasswd')), 'forgetpasswd');
 const signup = r => require.ensure([], () => r(require('@/page/signup')), 'signup');
+const addS3 = r => require.ensure([], () => r(require('@/page/addS3')), 'addS3');
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const home = r => require.ensure([], () => r(require('@/page/home')), 'home');
 const addPolicy = r => require.ensure([], () => r(require('@/page/addPolicy')), 'addPolicy');
@@ -37,6 +38,10 @@ const routes = [
 	{
 		path: '/signup',
 		component: signup
+	},
+	{
+		path: '/addS3',
+		component: addS3
 	},
 	{
 		path: '/manage',
