@@ -55,7 +55,8 @@ var context = config.dev.context
 switch(process.env.NODE_ENV){
     //case 'local': var proxypath = 'http://localhost:8001'; break;
     case 'local': var proxypath = 'http://192.168.137.241:8081'; break;
-    case 'online': var proxypath = 'http://203.6.232.235:8081'; break;
+    //case 'online': var proxypath = 'http://203.6.232.235:8081'; break;
+    case 'online': var proxypath = 'http://115.159.201.109:8081'; break;
     //case 'online': var proxypath = 'http://elm.cangdu.org'; break;
 }
 var options = {
